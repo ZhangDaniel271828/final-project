@@ -65,3 +65,14 @@ export async function updateUser(id, udpateData) {
   // Return true if changes applied, false otherwise
   return dbResult.changes > 0;
 }
+export async function createUser(userData) {
+  const db = await getDatabase();
+  return await db.run(
+    "INSERT INTO Users (username, password, realName, birthDate, blurb) VALUES (?, ?, ?, ?, ?)",
+    userData.username,
+    userData.password,
+    userData.realName,
+    userData.birthDate,
+    userData.blurb
+  );
+}
