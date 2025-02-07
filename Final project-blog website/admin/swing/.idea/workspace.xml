@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9714242f-f06c-490d-b58a-834d3a35c7bf" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/../../backend/src/routes/api/api-avatar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/static/default1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/static/default2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/static/default3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/static/default4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/db/users-dao.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/db/users-dao.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/db/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/db/util.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/middleware/auth-middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/middleware/auth-middleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/routes/api/api-auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/routes/api/api-auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/routes/api/api-users.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/routes/api/api-users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/routes/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/routes/api/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../backend/src/sql/init-db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../backend/src/sql/init-db.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/lib/components/UserInfoForm.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/lib/components/UserInfoForm.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/lib/js/api-urls.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/lib/js/api-urls.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/routes/+layout.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/routes/+layout.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/routes/about/myArticles/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/routes/about/myArticles/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/routes/login/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/routes/login/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/routes/login/register/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/routes/login/register/+page.svelte" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Daisygao978&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ZhangDaniel271828/final-project.git&quot;,
+    &quot;accountId&quot;: &quot;4a99c8dc-a74f-4ab4-a77c-2e624f936872&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2sbbCnUm8UZRLCVwt4c8mDj7plt" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.App.executor": "Run",
+    "Application.MainView.executor": "Run",
+    "Application.User.executor": "Run",
+    "Application.UserController.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Merging daisy__branch",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true",
+    "应用程序.App.executor": "Run"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="controller" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="9714242f-f06c-490d-b58a-834d3a35c7bf" name="更改" comment="" />
+      <created>1738727098841</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738727098841</updated>
+      <workItem from="1738727100003" duration="8735000" />
+      <workItem from="1738893091950" duration="7097000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
