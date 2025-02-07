@@ -24,6 +24,8 @@
 <nav>
   <ul>
     <li><a href="/" class:active={path === "/"}>Home</a></li>
+    <li><a href="/login/register" class:active={path === "/"}>Register</a></li>
+    <li><a href="/about/myArticles" class:active={path === "/"}>Articles</a></li>
     {#if data.isLoggedIn}
       <li><a href="/about" class:active={path.startsWith("/about")}>About me</a></li>
     {/if}

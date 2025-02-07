@@ -1,16 +1,12 @@
 <script>
-  import { goto } from "$app/navigation";
-  import { AUTH_URL } from "$lib/js/api-urls.js";
+import { goto } from '$app/navigation'; 
+import { AUTH_URL } from "$lib/js/api-urls.js";
 
   let username = "";
   let password = "";
   let error = false;
 
-  /**
-   * Handles logging in by sending a POST request to /api/auth, with the given username and password.
-   *
-   * If successful, redirect the user back to the homepage. Otherwise, display an error message.
-   */
+  
   async function handleSubmit() {
     error = false;
     const response = await fetch(AUTH_URL, {
@@ -44,6 +40,8 @@
     <span class="error">Could not log in with those credentials, please try again.</span>
   {/if}
 </form>
+
+<button on:click={()=>goto("login/register")} >Register</button>
 
 <style>
   form {
