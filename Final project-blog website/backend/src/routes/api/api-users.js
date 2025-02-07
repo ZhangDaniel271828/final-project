@@ -35,7 +35,7 @@ router.patch("/me", requiresAuthentication, async (req, res) => {
     return res.sendStatus(422);
   }
 });
-
+//自动更新
 export default router;
 
 

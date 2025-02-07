@@ -23,6 +23,10 @@ router.post("/", async (req, res) => {
   const user = await getUserWithCredentials(username, password);
   if (!user) return res.sendStatus(401);
 
+  // 验证密码
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  if (!passwordMatch) return res.sendStatus(401);
+
   // Create user JWT token and send it back as a HTTP-only cookie along with a 204 status.
   const jwtToken = createUserJWT(user.username);
 
@@ -81,18 +85,18 @@ router.post("/register", async (req, res) => {
   }
 
   // **3️⃣ 加密密码**
-  //const hashedPassword = await bcrypt.hash(password, 10); // 加盐哈希
+  const hashedPassword = await bcrypt.hash(password, 10); // 加盐哈希
 
   // **4️⃣ 存入数据库**
   try {
     await createUser({
       username,
-      password,//: hashedPassword, // 存储加密后的密码
+      password: hashedPassword, // 存储加密后的密码
       realName,
       birthDate,
       blurb
     });
-
+    
     return res.sendStatus(201); // 201 Created
   } catch (error) {
     console.error("Error creating user:", error);

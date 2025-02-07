@@ -15,3 +15,4 @@ INSERT INTO Users (username, password, realName, birthDate, blurb) VALUES
     ('pokemondoctor', '67890', 'Joy Nurtureheart', '1985-03-15', 'I am Nurse Joy, devoted to nurturing and healing Pokémon at the Pokémon Center.'),
     ('growlitheisbae', 'pa55word', 'Jenny Ironwill', '1992-07-11', 'I am Officer Jenny, upholding peace and protecting Pokémon with my Growlithe.'),
     ('1514eva', 'pokeman', 'Samuel Oak', '1950-09-14', 'I am Professor Oak, passionate about Pokémon research and helping young trainers.');
+    ('mistyfan', 'watergym', 'Misty Waterflower', '1994-06-01', 'I am Misty, the Cerulean City Gym Leader, specializing in Water-type Pokémon.')
