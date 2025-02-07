@@ -41,7 +41,10 @@ import { AUTH_URL } from "$lib/js/api-urls.js";
   {/if}
 </form>
 
-<button on:click={()=>goto("login/register")} >Register</button>
+<div class = "goToRegister">
+<button on:click={()=>goto("login/register")} >Go to Register</button>
+</div>
+
 
 <style>
   form {
@@ -66,4 +69,13 @@ import { AUTH_URL } from "$lib/js/api-urls.js";
     padding: 5px;
     text-align: center;
   }
+
+  .goToRegister {
+		margin: auto;
+		max-width: 500px;
+		border: 1px dashed green;
+		padding: 10px;
+		display: grid;
+		grid-template-columns:1fr;
+	}
 </style>
