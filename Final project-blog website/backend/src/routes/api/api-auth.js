@@ -105,7 +105,7 @@ router.post("/register", async (req, res) => {
 });
 
 
-//注册：检查用户名
+//注册：检查用户名.测试通过
 router.get("/check-username", async (req, res) => {
   const { username } = req.query;
 

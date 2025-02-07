@@ -22,11 +22,18 @@ export async function getUserWithUsername(username) {
  */
 export async function getUserWithCredentials(username, password) {
   const db = await getDatabase();
-  return await db.get(
-    "SELECT * from Users WHERE username = ? AND password = ?",
-    username,
-    password
+  // 查询数据库中的用户数据
+  const user = await db.get(
+    "SELECT * FROM Users WHERE username = ?",
+    username
   );
+
+  // 如果用户不存在或者密码验证失败，返回 null
+  if (!user || !(await bcrypt.compare(password, user.password))) {
+    return null;
+  }
+
+  return user;
 }
 
 /**
