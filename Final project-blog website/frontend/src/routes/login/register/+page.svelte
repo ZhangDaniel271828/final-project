@@ -1,14 +1,13 @@
 <script>
-	import { goto } from '$app/navigation'; 
-	import { AUTH_URL } from "$lib/js/api-urls.js";
+	import { goto } from '$app/navigation';
+	import{USER_REGISTER} from "$lib/js/api-urls.js"
 
 	//fomr variables
 	let username = "";
 	let password = "";
 	let repeatPassword = "";
+	let realName = ""
 	let birthDate = "";
-	let lastName = "";
-	let firstName = "";
 	let blurb = "";
 
 // avator variables and function
@@ -34,6 +33,34 @@
 		file = null;
 	}
 
+	//handle register
+	async function registerUser() {
+		console.log({username, password, realName, birthDate, blurb});
+
+
+
+		try{
+			const response = await fetch(USER_REGISTER, {
+				method: "POST",
+				headers: {
+				"Content-Type": "application/json"
+				},
+				body: JSON.stringify({username, password, realName, birthDate, blurb})
+			});
+			
+			if (response.status === 201) {
+				alert("Success! Please Log in");
+				goto("/login");
+			}
+			if(response.status === 400){
+				alert("Missing required fields");
+			}
+
+		}catch(error){
+      alert("error!");
+		}
+
+	}
 
 </script>
 	
@@ -46,7 +73,7 @@
 <h1>Register</h1>
 
 <!-- this is a form -->
-<form>
+<form on:submit|preventDefault={registerUser}>
 	<!-- baisc form -->
 	<div class = "basic-form">
 		<label for="username">Username:</label>
@@ -63,11 +90,9 @@
 		{/if}
 
 
-		<label for="firstName">Frist Name:</label>
-		<input type="text" name="firstName" bind:value={firstName} required />
+		<label for="realName">Real Name:</label>
+		<input type="text" name="realName" bind:value={realName} required />
 
-		<label for="lastName">Last Name:</label>
-		<input type="text" name="lastName" bind:value={lastName} required />
 
 		<label for="birthDate">Date of Birth:</label>
 		<input type="text" name="birthDate" bind:value={birthDate} required />

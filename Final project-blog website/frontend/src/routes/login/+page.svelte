@@ -1,15 +1,14 @@
 <script>
 import { goto } from '$app/navigation'; 
-import { AUTH_URL } from "$lib/js/api-urls.js";
+import { AUTH_LOGIN } from "$lib/js/api-urls.js";
+import { invalidateAll } from "$app/navigation";
 
   let username = "";
   let password = "";
   let error = false;
-
-  
   async function handleSubmit() {
     error = false;
-    const response = await fetch(AUTH_URL, {
+    const response = await fetch(AUTH_LOGIN, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -19,7 +18,9 @@ import { AUTH_URL } from "$lib/js/api-urls.js";
     if (response.status === 401) {
       error = true;
     } else {
-      goto("/", { invalidateAll: true, replaceState: true });
+      goto("/");
+      await invalidateAll();
+
     }
   }
 </script>

@@ -4,13 +4,7 @@ import { updateUser } from "../../db/users-dao.js";
 
 const router = express.Router();
 
-/**
- * Sending a GET request to /api/users/me will return the user info for the currently authenticated user,
- * or return a 401 if there's an authentication error.
- *
- * The authentication functionality is handled by the requiresAuthentication middleware, which adds the user
- * info to req.user. So we just need to return that.
- */
+
 router.get("/me", requiresAuthentication, (req, res) => {
   return res.json(req.user);
 });
@@ -27,7 +21,7 @@ router.get("/me", requiresAuthentication, (req, res) => {
  *
  * Otherwise, the user info is updated and a 204 response is returned.
  */
-router.patch("/me", requiresAuthentication, async (req, res) => {
+router.patch("/update", requiresAuthentication, async (req, res) => {
   try {
     const isUpdated = await updateUser(req.user.id, req.body);
     return res.sendStatus(isUpdated ? 204 : 404);
@@ -35,5 +29,7 @@ router.patch("/me", requiresAuthentication, async (req, res) => {
     return res.sendStatus(422);
   }
 });
-
+//自动更新
 export default router;
+
+

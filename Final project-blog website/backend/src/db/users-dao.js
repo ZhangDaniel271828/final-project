@@ -35,9 +35,10 @@ export async function getUserWithCredentials(username, password) {
  */
 const updateUserSchema = yup
   .object({
-    firstName: yup.string().min(1).optional(),
-    lastName: yup.string().min(1).optional(),
+    username: yup.string().min(3).optional(),
     password: yup.string().min(5).optional(),
+    realName: yup.string().min(1).optional(),
+    birthDate: yup.string().min(2).optional(),
     blurb: yup.string().optional()
   })
   .required();
@@ -53,15 +54,34 @@ const updateUserSchema = yup
  */
 export async function updateUser(id, udpateData) {
   // Validate incoming data (throw error if invalid)
+  
   const parsedUpdateData = updateUserSchema.validateSync(udpateData, {
     abortEarly: false,
     stripUnknown: true
   });
-
+ 
+  console.log(parsedUpdateData);
   // Build and run update statement
   const db = await getDatabase();
   const dbResult = await updateDatabase(db, "Users", parsedUpdateData, id);
-
+ 
   // Return true if changes applied, false otherwise
   return dbResult.changes > 0;
+}
+
+
+
+export async function createUser(userData) {
+  console.log("createUser function");
+  const db = await getDatabase();
+  console.log("1");
+  const dbResult = await db.run(
+    "INSERT INTO Users (username, password, realName, birthDate, blurb, isManager) VALUES (?, ?, ?, ?, ?, ?)",
+    userData.username,
+    userData.password,
+    userData.realName,
+    userData.birthDate,
+    userData.blurb,
+    0
+  );
 }

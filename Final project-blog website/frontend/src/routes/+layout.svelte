@@ -1,6 +1,6 @@
 <script>
   import "$lib/css/app.css";
-  import { AUTH_URL } from "$lib/js/api-urls.js";
+  import { AUTH_UOT } from "$lib/js/api-urls.js";
 
   import { page } from "$app/stores";
   import { invalidateAll } from "$app/navigation";
@@ -12,20 +12,20 @@
   /**
    * Handle logout by sending a DELETE request to /api/auth, then invalidating.
    */
-  async function handleLogout() {
-    const response = await fetch(AUTH_URL, {
-      method: "DELETE",
-      credentials: "include"
-    });
-    await invalidateAll();
-  }
+export async function handleLogout() {
+  const response = await fetch(AUTH_UOT, {
+  method: "DELETE",
+  credentials: "include"
+  });
+  await invalidateAll();
+}
 </script>
 
 <nav>
   <ul>
     <li><a href="/" class:active={path === "/"}>Home</a></li>
-    <li><a href="/login/register" class:active={path === "/"}>Register</a></li>
-    <li><a href="/about/myArticles" class:active={path === "/"}>Articles</a></li>
+    <li><a href="/login/register" class:active={path === "/login/register"}>Register</a></li>
+    <li><a href="/about/myArticles" class:active={path === "/about/myArticles"}>Articles</a></li>
     {#if data.isLoggedIn}
       <li><a href="/about" class:active={path.startsWith("/about")}>About me</a></li>
     {/if}
