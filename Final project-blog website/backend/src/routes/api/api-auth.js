@@ -92,8 +92,6 @@ router.get("/check-username", async (req, res) => {
   return res.json({ available: !existingUser });
 });
 
-
-
 //Handle for manager.
 //delete user based on id.
 router.delete("/delete/:id", async (req, res) => {
