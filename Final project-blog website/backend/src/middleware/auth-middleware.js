@@ -20,3 +20,4 @@ export async function requiresAuthentication(req, res, next) {
     return res.sendStatus(401);
   }
 }
+
