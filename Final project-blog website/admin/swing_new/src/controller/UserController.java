@@ -20,7 +20,7 @@ public class UserController {
         return "admin".equals(username) && "password".equals(password);
     }
 
-    // 加载用户数据（模拟从后端获取）
+    // 加载用户数据（模拟从后端获取）这里要调整。
     public void loadUsers() {
         // 模拟的 JSON 数据
         String jsonData = "[{\"id\":1,\"username\":\"user1\",\"role\":\"admin\"},{\"id\":2,\"username\":\"user2\",\"role\":\"user\"}]";
