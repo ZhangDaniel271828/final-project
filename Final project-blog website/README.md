@@ -1,2 +1,2 @@
 213123213
-add new
+add news
