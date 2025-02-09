@@ -3,66 +3,43 @@ package model;
 public class User {
     private int id;
     private String username;
-    private String role;
+    private boolean isManager;
+    private String realName;    // 真实姓名
+    private String birthDate;   // 出生日期
+    private String description;  // 介绍
 
-    public User(int id, String username, String role) {
+    // 修改构造函数，以包含新的字段
+    public User(int id, String username, boolean isManager, String realName, String birthDate, String description) {
         this.id = id;
         this.username = username;
-        this.role = role;
+        this.isManager = isManager;
+        this.realName = realName;
+        this.birthDate = birthDate;
+        this.description = description;
     }
 
-    // Getter 和 Setter 方法
+    // Getter 方法
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public boolean isManager() {
+        return isManager;
     }
 
-    public String getRole() {
-        return role;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public String getBirthDate() {
+        return birthDate;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+    public String getDescription() {
+        return description;
     }
-/* 测试成功，没问题。
-    // 主方法用于测试
-    public static void main(String[] args) {
-        // 创建用户实例
-        User user1 = new User(1, "user1", "admin");
-        User user2 = new User(2, "user2", "user");
-
-        // 打印用户信息
-        System.out.println(user1);
-        System.out.println(user2);
-
-        // 测试 Getter 和 Setter 方法
-        user1.setUsername("newUser1");
-        user2.setRole("superuser");
-
-        System.out.println("更新后的用户信息:");
-        System.out.println(user1);
-        System.out.println(user2);
-    }
-
- */
 }
