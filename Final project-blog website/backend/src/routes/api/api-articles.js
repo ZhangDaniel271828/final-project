@@ -1,16 +1,26 @@
 import express from "express";
-import { getArticles, getAllArticles, addArticle, updateArticle, deleteArticle} from '../../db/articles-dao.js';
+import { getArticles, getAllArticles, addArticle, updateArticle, deleteArticle, getArticleById} from '../../db/articles-dao.js';
 
 const router = express.Router();
 
-router.get("/:authorId", async (req, res) => {
+router.get("/author/:id", async (req, res) => {
   try {
     const { sortBy } = req.query; 
-    const authorId = req.params.authorId;
+    const authorId = req.params.id;
     console.log(sortBy, authorId)
     let articles;
     articles = await getArticles(sortBy, authorId);  
     return res.json(articles); 
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to fetch articles' });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  try {
+    const article = await getArticleById(id);
+    return res.json(article); 
   } catch (error) {
     return res.status(500).json({ error: 'Failed to fetch articles' });
   }

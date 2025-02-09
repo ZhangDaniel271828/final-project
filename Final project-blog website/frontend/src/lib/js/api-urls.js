@@ -24,3 +24,7 @@ export const USER_REGISTER = `${BASE_URL}/auth/register`;
 
 //Comments-related URL
 export const COMMENTS_URL = `${BASE_URL}/comments`;
+
+//Article-related URL
+export const ARTICLES_URL = `${BASE_URL}/articles`;
+export const ARTICLE_UPDATE = `${BASE_URL}/articles/update`;

@@ -119,10 +119,28 @@ export async function updateArticle(id, udpateData) {
 }
 
 export async function deleteArticle(id) {
-  const db = await getDatabase(); 
-  const result = await db.run('DELETE FROM Articles WHERE id = ?', [id]);
+  try {
+    const db = await getDatabase();  
+    const result = await db.run('DELETE FROM Articles WHERE id = ?', [id]); 
+    if (result.changes === 0) {
+      console.log(`No article found with id ${id}`);  
+    } else {
+      console.log(`Article with id ${id} deleted successfully`); 
+    }
+  } catch (error) {
+    console.error("Error deleting article:", error); 
+  }
 }
 
+export async function getArticleById(id) {
+  try {
+    const db = await getDatabase(); 
+    const result = await db.get('SELECT * FROM Articles WHERE id = ?', [id]); 
+    return result; 
+  } catch (error) {
+    console.error("Error fetching article:", error);
+  }
+}
 
 
 
