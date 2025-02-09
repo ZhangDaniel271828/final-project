@@ -5,8 +5,15 @@ import fs from "fs";
 /** @type Database<sqlite3.Database, sqlite3.Statement> */
 let db;
 
+// 指定固定的数据库文件路径，非常重要
+const DB_FILE_PATH = "../backend/project-database.db";
+
+// 指定初始化脚本的固定路径，非常重要
+const INIT_SCRIPT_PATH = "../backend/src/sql/init-db.sql";
+
+
 /**
- * Opens the database if it's not already open, then returns it.
+ * Opens the database. If it doesn't exist, it initializes it.
  *
  * @returns {Promise<Database<sqlite3.Database, sqlite3.Statement>>} the database
  */
@@ -18,15 +25,15 @@ export async function getDatabase() {
 }
 
 /**
- * Opens the database identified in the DB_FILENAME env variable.
+ * Opens the database identified by the fixed file path.
  * Then, if it didn't already exist, initializes it.
  *
  * @returns {Promise<Database<sqlite3.Database, sqlite3.Statement>>} the database
  */
 async function openDatabase() {
-  const dbExists = fs.existsSync(process.env.DB_FILENAME);
+  const dbExists = fs.existsSync(DB_FILE_PATH);
   const db = await open({
-    filename: process.env.DB_FILENAME,
+    filename: DB_FILE_PATH,
     driver: sqlite3.Database
   });
 
@@ -34,7 +41,7 @@ async function openDatabase() {
   await db.exec("PRAGMA foreign_keys = ON");
 
   if (!dbExists) {
-    console.log(`Database ${process.env.DB_FILENAME} doesn't exist.`);
+    console.log(`Database ${DB_FILE_PATH} doesn't exist.`);
     await initDatabase(db);
   }
 
@@ -47,7 +54,7 @@ async function openDatabase() {
  * @param {Database<sqlite3.Database, sqlite3.Statement>} db the database to initialize
  */
 async function initDatabase(db) {
-  const initScript = process.env.DB_INIT_SCRIPT;
+  const initScript = INIT_SCRIPT_PATH;
   console.log(`Initializing database using init script ${initScript}`);
   const sql = fs.readFileSync(initScript).toString();
   await db.exec(sql);

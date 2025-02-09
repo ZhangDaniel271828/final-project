@@ -45,7 +45,7 @@ export async function addComment(articleId, userId, parentId, content) {
   const db = await getDatabase(); 
   await db.run(`
     INSERT INTO Comments (articleId, userId, parentId, content, createdAt)
-    VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
+    VALUES (?, ?, ?, ?, datetime('now', 'localtime'))
   `, articleId, userId, parentId, content);
 }
 

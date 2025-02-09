@@ -27,7 +27,7 @@ export async function handleLogout() {
     <li><a href="/login/register" class:active={path === "/login/register"}>Register</a></li>
     {#if data.isLoggedIn}
       <li><a href="/about" class:active={path.startsWith("/about")}>About me</a></li>
-      <li><a href="/adbout/myArticles" class:active={path === "/about/myArticles"}>Articles</a></li>
+      <li><a href="/about/myArticles" class:active={path === "/about/myArticles"}>Articles</a></li>
 
     {/if}
   </ul>

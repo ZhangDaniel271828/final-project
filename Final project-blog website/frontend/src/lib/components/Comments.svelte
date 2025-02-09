@@ -6,12 +6,12 @@
 
   //get user's Info
   export let user;
-  let articleId =1;
+  let articleId =2;
   let userId = user.id;
   let parentId = null;
   //User's basic info
  
-  
+
 
   //Handle comments info
   let comments = [];
@@ -51,7 +51,7 @@
       let commentData = {articleId, parentId, userId, content};
 
     try{  
-      const response = await fetch("http://localhost:3000/api/comments/", {
+      const response = await fetch(COMMENTS_URL, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
@@ -98,6 +98,13 @@
     }
 
   }
+
+  let displayComment = true;
+  function toggle(){
+    displayComment = !displayComment;
+  }
+
+
 </script>
 
 
@@ -112,83 +119,89 @@
   <br>
   <button on:click={() => submitReply(parentId)}>submit</button>
 </div>
+<button on:click = {toggle}>show/hide comments</button>
 
+{#if displayComment} 
+  {#each comments as comment}
 
+    <!-- set up main comment -->
+    <div class="mainComments">
+      <span class="username"><strong>{comment.username}:</strong>&nbsp;</span>
+      <span class = "contentLevel1">{comment.content}</span>   
+      <br>
+      <span class = "timeStamp">{comment.createdAt}</span>
 
-
-{#each comments as comment}
-
-  <!-- set up main comment -->
-  <div class="mainComments">
-    <span class="username"><strong>{comment.username}:</strong>&nbsp;</span>
-    <span class = "contentLevel1">{comment.content}</span>   
-    <br>
-    <span class = "timeStamp">{comment.createdAt}</span>
-
-    <!-- //set up reply level1 button -->
-    <button on:click={() => showReplyForm(comment.id)}>reply</button>
-    {#if replies[comment.id] == 1}
-      <div class="reply-form">
-        <textarea rows="6" cols="80" bind:value={replyContent}></textarea>
-        <br>
-        <button on:click={() => submitReply(comment.id)}>submit</button>
-      </div>
-    {/if}
-
-    <!-- //set up delete level1 button -->
-    {#if user.id == comment.userId}
-      <button on:click={() => deleteComment(comment.id)}>Delete</button>
-    {/if}
-
-
-
-    <!-- set up second comment -->
-    {#if comment.childComment && comment.childComment.length > 0}
-      {#each comment.childComment as child}
-        <div class="childComment1">
-          <span class="username"><strong>{child.username}:</strong>&nbsp;</span>
-          <span class = "contentLevel2">{child.content}</span>
-          <span class = "timeStamp">{child.createdAt}</span>
-          
-           <!-- //set up reply level2 button -->
-          <button on:click={() => showReplyForm(child.id)}>reply</button>
-          {#if replies[child.id] == 1}
-            <div class="reply-form">
-              <textarea rows="6" cols="80" bind:value={replyContent}></textarea>
-              <br>
-              <button on:click={() => submitReply(child.id)}>submit</button>
-            </div>
-          {/if}
-
-          <!-- //set up delete level2 button -->
-          {#if user.id == child.userId}
-          <button on:click={() => deleteComment(comment.id)}>Delete</button>
-          {/if}
-
-
-        <!-- set up third comment -->
-          {#if child.childComment && child.childComment.length > 0}
-            {#each child.childComment as grandChild}
-            <div class="childComment2">
-              <span class="username"><strong>{grandChild.username}:</strong>&nbsp;</span>
-              <span class = "contentLevel3">{grandChild.content}</span>
-                <br>
-              <span class = "timeStamp">{grandChild.createdAt}</span>
-
-              <!-- //set up delete level3 button -->
-              {#if user.id == grandChild.userId}
-              <button on:click={() => deleteComment(comment.id)}>Delete</button>
-              {/if}
-            </div>
-            {/each}
-          {/if}
+      <!-- //set up reply level1 button -->
+      <button on:click={() => showReplyForm(comment.id)}>reply</button>
+      {#if replies[comment.id] == 1}
+        <div class="reply-form">
+          <textarea rows="6" cols="80" bind:value={replyContent}></textarea>
+          <br>
+          <button on:click={() => submitReply(comment.id)}>submit</button>
         </div>
-      {/each}
-    {/if}
-  </div>
-{/each}
+      {/if}
+
+      <!-- //set up delete level1 button -->
+      {#if user.id == comment.userId}
+        <button on:click={() => deleteComment(comment.id)}>Delete</button>
+      {/if}
 
 
+
+      <!-- set up second comment -->
+      {#if comment.childComment && comment.childComment.length > 0}
+        {#each comment.childComment as child}
+          <div class="childComment1">
+            <span class="username"><strong>{child.username}:</strong>&nbsp;</span>
+            <span class = "contentLevel2">{child.content}</span>
+            <span class = "timeStamp">{child.createdAt}</span>
+            
+            <!-- //set up reply level2 button -->
+            <button on:click={() => showReplyForm(child.id)}>reply</button>
+            {#if replies[child.id] == 1}
+              <div class="reply-form">
+                <textarea rows="6" cols="80" bind:value={replyContent}></textarea>
+                <br>
+                <button on:click={() => submitReply(child.id)}>submit</button>
+              </div>
+            {/if}
+
+            <!-- //set up delete level2 button -->
+            {#if user.id == child.userId}
+            <button on:click={() => deleteComment(comment.id)}>Delete</button>
+            {/if}
+
+
+          <!-- set up third comment -->
+            {#if child.childComment && child.childComment.length > 0}
+              {#each child.childComment as grandChild}
+              <div class="childComment2">
+                <span class="username"><strong>{grandChild.username}:</strong>&nbsp;</span>
+                <span class = "contentLevel3">{grandChild.content}</span>
+                  <br>
+                <span class = "timeStamp">{grandChild.createdAt}</span>
+
+                <!-- //set up delete level3 button -->
+                {#if user.id == grandChild.userId}
+                <button on:click={() => deleteComment(comment.id)}>Delete</button>
+                {/if}
+              </div>
+              {/each}
+            {/if}
+          </div>
+        {/each}
+      {/if}
+    </div>
+  {/each}
+{/if}
+
+
+
+
+
+
+
+<!-- CSS part -->
 <style>
 .mainComments{
   max-width: 600px;

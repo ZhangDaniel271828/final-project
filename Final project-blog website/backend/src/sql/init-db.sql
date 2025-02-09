@@ -22,16 +22,15 @@ INSERT INTO Users (username, password, realName, birthDate, blurb, isManager) VA
 CREATE TABLE Articles (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   authorId INTEGER NOT NULL,
-  title TEXT NOT NULL,
+  article_title TEXT NOT NULL,
   createdAt TEXT DEFAULT (DATETIME('now', 'localtime')),
   content TEXT NOT NULL,
   FOREIGN KEY (authorId) REFERENCES Users(id) ON DELETE CASCADE
 );
 
-INSERT INTO Articles (authorId, title, content) VALUES
+INSERT INTO Articles (authorId, article_title, content) VALUES
     (1, 'Exploring the Future of AI', 'Artificial intelligence is changing the world, but what does the future hold for it?'),
     (2, 'How to Learn Programming', 'Programming is an essential skill. How can we learn it efficiently?');
-
 
 
 

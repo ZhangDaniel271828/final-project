@@ -67,6 +67,7 @@ export async function getAllusers(){
   const allUsers = await db.all("SELECT * FROM Users");
   return allUsers;
 }
+
 // delete users based on id
 export async function deleteUserById(id) {
   const db = await getDatabase();
