@@ -124,6 +124,10 @@ public class MainView {
             loadUserTable();
             logoutButton.setEnabled(true);
             deleteUserButton.setEnabled(true);
+            loginButton.setEnabled(false); // 禁用登录按钮
+            loginButton.setForeground(Color.GRAY); // 变暗登录按钮
+            loginButton.setBackground(Color.LIGHT_GRAY); // 变暗登录按钮背景
+            loginButton.setBorderPainted(false); // 去掉边框
         } else {
             JOptionPane.showMessageDialog(frame, "Login Failed");
         }
@@ -136,6 +140,10 @@ public class MainView {
         userInfoLabel.setText("用户信息:");
         logoutButton.setEnabled(false);
         deleteUserButton.setEnabled(false);
+        loginButton.setEnabled(true); // 启用登录按钮
+        loginButton.setForeground(Color.BLACK); // 恢复登录按钮颜色
+        loginButton.setBackground(null); // 恢复登录按钮背景
+        loginButton.setBorderPainted(true); // 恢复边框
     }
 
     private void loadUserTable() {
