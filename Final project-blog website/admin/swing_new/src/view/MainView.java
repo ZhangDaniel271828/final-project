@@ -108,6 +108,7 @@ public class MainView {
                     };
                     worker.execute(); // 启动工作线程
                 }
+                deleteUserButton.setEnabled(row != -1); // 根据是否选择用户启用或禁用删除按钮
             }
         });
 
@@ -123,7 +124,8 @@ public class MainView {
             JOptionPane.showMessageDialog(frame, "Login Successful");
             loadUserTable();
             logoutButton.setEnabled(true);
-            deleteUserButton.setEnabled(true);
+            //deleteUserButton.setEnabled(true);
+            deleteUserButton.setEnabled(false); // 登录后仍然禁用删除按钮
             loginButton.setEnabled(false); // 禁用登录按钮,来自于老师的要求
             loginButton.setForeground(Color.GRAY); // 变暗登录按钮，来自于老师的要求
             loginButton.setBackground(Color.LIGHT_GRAY); // 变暗登录按钮背景，来自于老师的要求
@@ -139,7 +141,7 @@ public class MainView {
         tableModel.setRowCount(0); // 清空表格
         userInfoLabel.setText("用户信息:");
         logoutButton.setEnabled(false);
-        deleteUserButton.setEnabled(false);
+        deleteUserButton.setEnabled(false);//登出后，删除按钮禁用
         loginButton.setEnabled(true); // 启用登录按钮，来自于老师的要求
         loginButton.setForeground(Color.BLACK); // 恢复登录按钮颜色
         loginButton.setBackground(null); // 恢复登录按钮背景
