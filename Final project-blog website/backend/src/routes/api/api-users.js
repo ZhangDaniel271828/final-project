@@ -29,13 +29,21 @@ router.get("/all", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const id = req.params.id; 
+  const id = req.params.id; // 获取 ID 参数
+  console.log(`请求的用户 ID: ${id}`); // 调试输出
 
   try {
-    const users = await getUserWithId(id);    
-    return res.json(users);
-  }catch (error) {
-    return res.status(500);
+    const user = await getUserWithId(id); // 从数据库中获取用户信息
+
+    if (!user) {
+      return res.status(404).json({ message: "用户未找到" }); // 用户未找到
+    }
+
+    console.log(`查询结果: ${JSON.stringify(user)}`); // 调试输出
+    return res.json(user); // 返回用户信息
+  } catch (error) {
+    console.error(error); // 打印错误信息
+    return res.status(500).json({ message: "服务器错误" }); // 返回服务器错误
   }
 });
 

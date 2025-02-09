@@ -168,7 +168,7 @@
 
             <!-- //set up delete level2 button -->
             {#if user.id == child.userId}
-            <button on:click={() => deleteComment(comment.id)}>Delete</button>
+            <button on:click={() => deleteComment(child.id)}>Delete</button>
             {/if}
 
 
@@ -183,7 +183,7 @@
 
                 <!-- //set up delete level3 button -->
                 {#if user.id == grandChild.userId}
-                <button on:click={() => deleteComment(comment.id)}>Delete</button>
+                <button on:click={() => deleteComment(grandChild.id)}>Delete</button>
                 {/if}
               </div>
               {/each}

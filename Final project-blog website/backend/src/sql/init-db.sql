@@ -22,15 +22,34 @@ INSERT INTO Users (username, password, realName, birthDate, blurb, isManager) VA
 CREATE TABLE Articles (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   authorId INTEGER NOT NULL,
+  username TEXT NOT NULL,
   article_title TEXT NOT NULL,
   createdAt TEXT DEFAULT (DATETIME('now', 'localtime')),
   content TEXT NOT NULL,
-  FOREIGN KEY (authorId) REFERENCES Users(id) ON DELETE CASCADE
+  FOREIGN KEY (authorId) REFERENCES Users(id) ON DELETE CASCADE,
+  FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE
 );
 
-INSERT INTO Articles (authorId, article_title, content) VALUES
-    (1, 'Exploring the Future of AI', 'Artificial intelligence is changing the world, but what does the future hold for it?'),
-    (2, 'How to Learn Programming', 'Programming is an essential skill. How can we learn it efficiently?');
+
+INSERT INTO Articles (authorId, username, article_title, content) VALUES
+    (3, 'pokemondoctor', 'The Rise of Quantum Computing', 'Quantum computers could revolutionize industries, but how far are we from practical applications?'),
+    (4, 'growlitheisbae', 'Why Cybersecurity Matters', 'As technology advances, so do cyber threats. How can we protect our digital assets?'),
+    (5, '1514eva', 'The Future of Space Exploration', 'Humanity is looking beyond Earth. Will we become an interplanetary species?'),
+    (1, 'SuperGaoye', 'Mastering Data Science', 'Data science is one of the most in-demand skills today. Here’s how to get started.'),
+    (2, 'ketchumall', 'The Psychology of Learning', 'Understanding how our brains learn can help us become more efficient learners.'),
+    (3, 'pokemondoctor', 'The Impact of Social Media', 'Social media connects us, but is it also making us more disconnected?'),
+    (4, 'growlitheisbae', 'Balancing Work and Life', 'Finding a balance between work and personal life is crucial for well-being.'),
+    (5, '1514eva', 'The Ethics of AI', 'As AI becomes more advanced, ethical concerns grow. Where should we draw the line?'),
+    (1, 'SuperGaoye', 'The History of Programming Languages', 'From Assembly to Python, let’s explore the evolution of programming languages.'),
+    (2, 'ketchumall', 'How to Build a Startup', 'Starting a business is challenging. Here are some lessons from successful entrepreneurs.'),
+    (3, 'pokemondoctor', 'The Science of Sleep', 'Sleep is essential for health. How can we optimize our sleep patterns?'),
+    (4, 'growlitheisbae', 'The Role of Music in Human Emotion', 'Music has a profound impact on our emotions. But why does it affect us so deeply?'),
+    (5, '1514eva', 'Will Robots Take Our Jobs?', 'Automation is increasing. Will it lead to mass unemployment or new opportunities?');
+
+
+
+
+
 
 
 
