@@ -1,7 +1,7 @@
 import express from "express";
-const router = express.Router(); // 先声明 router
+const router = express.Router(); 
 
-// 导入子路由
+//import child router
 import avatarRoutes from "./api-avatar.js";
 router.use("/avatar", avatarRoutes);
 
@@ -10,5 +10,11 @@ router.use("/auth", authRoutes);
 
 import userRoutes from "./api-users.js";
 router.use("/users", userRoutes);
+
+import commentsRoutes from "./api-comments.js"
+router.use("/comments", commentsRoutes);
+
+// import commentsRoutes from "./api-comments.js";
+// router.use("/comments", commentsRoutes);
 
 export default router;
