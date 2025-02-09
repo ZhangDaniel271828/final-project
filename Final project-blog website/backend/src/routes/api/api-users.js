@@ -1,6 +1,6 @@
 import express from "express";
 import { requiresAuthentication } from "../../middleware/auth-middleware.js";
-import { getAllusers } from "../../db/users-dao.js";
+import { getAllusers, getUserWithId, updateUser } from "../../db/users-dao.js";
 
 const router = express.Router();
 
@@ -28,7 +28,16 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  const id = req.params.id; 
 
+  try {
+    const users = await getUserWithId(id);    
+    return res.json(users);
+  }catch (error) {
+    return res.status(500);
+  }
+});
 
 export default router;
 
