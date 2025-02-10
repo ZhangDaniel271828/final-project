@@ -1,19 +1,14 @@
 <script>
-  import { goto } from "$app/navigation";
-  import { AUTH_URL } from "$lib/js/api-urls.js";
+import { goto } from '$app/navigation'; 
+import { AUTH_LOGIN } from "$lib/js/api-urls.js";
+import { invalidateAll } from "$app/navigation";
 
   let username = "";
   let password = "";
   let error = false;
-
-  /**
-   * Handles logging in by sending a POST request to /api/auth, with the given username and password.
-   *
-   * If successful, redirect the user back to the homepage. Otherwise, display an error message.
-   */
   async function handleSubmit() {
     error = false;
-    const response = await fetch(AUTH_URL, {
+    const response = await fetch(AUTH_LOGIN, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -23,7 +18,9 @@
     if (response.status === 401) {
       error = true;
     } else {
-      goto("/", { invalidateAll: true, replaceState: true });
+      goto("/");
+      await invalidateAll();
+
     }
   }
 </script>
@@ -44,6 +41,11 @@
     <span class="error">Could not log in with those credentials, please try again.</span>
   {/if}
 </form>
+
+<div class = "goToRegister">
+<button on:click={()=>goto("login/register")} >Go to Register</button>
+</div>
+
 
 <style>
   form {
@@ -68,4 +70,13 @@
     padding: 5px;
     text-align: center;
   }
+
+  .goToRegister {
+		margin: auto;
+		max-width: 500px;
+		border: 1px dashed green;
+		padding: 10px;
+		display: grid;
+		grid-template-columns:1fr;
+	}
 </style>

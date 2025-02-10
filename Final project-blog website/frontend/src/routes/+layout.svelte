@@ -1,21 +1,29 @@
 <script>
   import "$lib/css/app.css";
-  import { AUTH_URL } from "$lib/js/api-urls.js";
-
+  import { AUTH_UOT } from "$lib/js/api-urls.js";
   import { page } from "$app/stores";
   import { invalidateAll } from "$app/navigation";
+  import { ARTICLES_URL } from "$lib/js/api-urls.js";
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+
+
   $: path = $page.url.pathname;
   $: console.log(path);
-
   export let data;
+  
+
+  
+
+
 
   /**
    * Handle logout by sending a DELETE request to /api/auth, then invalidating.
    */
-  async function handleLogout() {
-    const response = await fetch(AUTH_URL, {
-      method: "DELETE",
-      credentials: "include"
+  export async function handleLogout() {
+    const response = await fetch(AUTH_UOT, {
+    method: "DELETE",
+    credentials: "include"
     });
     await invalidateAll();
   }
@@ -24,8 +32,11 @@
 <nav>
   <ul>
     <li><a href="/" class:active={path === "/"}>Home</a></li>
+    <li><a href="/login/register" class:active={path === "/login/register"}>Register</a></li>
     {#if data.isLoggedIn}
-      <li><a href="/about" class:active={path.startsWith("/about")}>About me</a></li>
+      <li><a href="/about" class:active={path === "/about"}>About me</a></li>
+      <li><a href="/about/myArticles" class:active={path === "/about/myArticles"}>My Articles</a></li>
+
     {/if}
   </ul>
   <span />
