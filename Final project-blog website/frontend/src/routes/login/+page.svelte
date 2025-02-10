@@ -1,7 +1,7 @@
 <script>
 import { goto } from '$app/navigation'; 
 import { AUTH_LOGIN } from "$lib/js/api-urls.js";
-import { invalidateAll } from "$app/navigation";
+import { invalidate } from '$app/navigation';
 
   let username = "";
   let password = "";

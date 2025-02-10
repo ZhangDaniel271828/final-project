@@ -28,6 +28,9 @@
       }
   }
   onMount(getComments);
+  $:user,getComments()
+
+
 
   //reply function
   let replies = {}
@@ -158,7 +161,7 @@
               <button on:click={() => showReplyForm(child.id)}>reply</button>
               {#if replies[child.id] == 1}
                 <div class="reply-form">
-                  <textarea rows="6" cols="80" bind:value={replyContent}></textarea>
+                  <textarea rows="6" cols="70" bind:value={replyContent}></textarea>
                   <br>
                   <button on:click={() => submitReply(child.id)}>submit</button>
                 </div>
@@ -203,9 +206,12 @@
 <style>
 .comments{
   background-color: rgb(229, 221, 239);
-  margin-left: 500px;
+  padding-top:5px;
+  padding-bottom:20px;
 }
-
+h2{
+  margin-left:50px;
+}
 .reply-form{
   margin-left:40px;
 }
@@ -215,8 +221,8 @@
   border: 1px dashed rgb(6, 35, 140);
   background-color: rgb(229, 248, 216);
   padding: 10px; 
-  margin:auto;
   margin-top:20px;
+  margin-left:40px;
   
 }
 .timeStamp{

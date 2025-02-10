@@ -2,7 +2,7 @@
 import { page } from "$app/stores";
 import { ARTICLES_URL } from "$lib/js/api-urls.js";
 import ArticleView from "$lib/components/ArticleView.svelte";
-import Comments from "$lib/components/Comments.svelte";
+import Comments from "$lib/components/CommentsLogin.svelte";
 export let data;
 let articleId;
 $: articleId = $page.params.id;
