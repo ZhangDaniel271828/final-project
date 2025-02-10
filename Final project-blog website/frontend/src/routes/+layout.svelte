@@ -22,6 +22,7 @@
     credentials: "include"
     });
     await invalidateAll();
+    goto('/login');
   }
 </script>
 
@@ -31,12 +32,9 @@
     <li><a href="/login/register" class:active={path === "/login/register"}>Register</a></li>
     <li><a href="/articles" class:active={path === "/articles"}>All Articles</a></li>
 
-
-    
     {#if data.isLoggedIn}
       <li><a href="/about" class:active={path === "/about"}>About me</a></li>
-      <li><a href="/about/myArticles" class:active={path === "/about/myArticles"}>My Articles</a></li>
-
+      <li><a href="/about/my-articles" class:active={path === "/about/my-articles"}>My Articles</a></li>
     {/if}
   </ul>
   <span />

@@ -1,5 +1,4 @@
 <script>
-  import { invalidate } from "$app/navigation";
   import {COMMENTS_URL} from "$lib/js/api-urls.js";
   import { onMount } from "svelte";
 
