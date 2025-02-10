@@ -24,7 +24,18 @@
   onMount(fetchArticles);
   $:data,fetchArticles();
 
+  let search = "";
 
+  function filter (search){
+    if(search != ""){
+      articles = articles.filter(article => 
+      article.article_title.toLowerCase().includes(search.toLowerCase())
+      );
+    }else{
+      fetchArticles();
+  }
+  }
+  $:filter(search);
 
 
   async function sortByAuthor() {
@@ -71,6 +82,8 @@
     <button on:click={() => fetchArticles()}>Sort articles by time</button>
     <button on:click={() => sortByAuthor()}>Sort articles by author</button>
     <button on:click={() => sortByTitle()}>Sort articles by title</button>
+    <label for="search">Search</label>
+    <input type="text" name = "search"   bind:value={search}>
     {#each articles as article}
         <a href={`/about/my-articles/${article.id}`}>{article.article_title}</a>
     {/each}

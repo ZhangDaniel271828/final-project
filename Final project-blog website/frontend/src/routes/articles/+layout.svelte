@@ -58,6 +58,19 @@
     }
   }  
 
+  let search = "";
+
+  function filter (search){
+    if(search != ""){
+      articles = articles.filter(article => 
+      article.article_title.toLowerCase().includes(search.toLowerCase())
+      );
+    }else{
+    getAllArticles();
+  }
+  }
+  $:filter(search);
+
 </script>
 
 
@@ -67,6 +80,8 @@
     <button on:click={() => getAllArticles()}>Sort articles by time</button>
     <button on:click={() => sortByAuthor()}>Sort articles by author</button>
     <button on:click={() => sortByTitle()}>Sort articles by title</button>
+    <label for="search">Search</label>
+    <input type="text" name = "search"   bind:value={search}>
 
     {#each articles as article}
         <a href={`/articles/${article.id}`}>{article.article_title}</a>
@@ -121,38 +136,6 @@
 
 
 
-
-
-
-
-
-<!-- <style>
-  .container{
-    margin-left:-200px;
-  }
-
-  nav {
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width:30%;
-      background-color: #c6c5c8;
-      margin-left: -100px;
-  }
-
-  a {
-      color: white;
-      text-decoration: none;
-      padding: 8px 12px;
-      background-color: #997fde;
-      border-radius: 5px;
-  }
-
-  a:hover {
-      background-color: #05c2df;
-  }
-  </style> -->
 
 
 
