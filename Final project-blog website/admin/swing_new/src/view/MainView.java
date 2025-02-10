@@ -55,7 +55,7 @@ public class MainView {
         buttonPanel.add(deleteUserButton);
 
         // 用户表格
-        String[] columnNames = {"ID", "Username", "Role", "RealName", "DateofBirth"};
+        String[] columnNames = {"ID", "Username", "Role", "RealName", "DateofBirth", "imageLink"};
         tableModel = new DefaultTableModel(columnNames, 0);
         userTable = new JTable(tableModel);
         userTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -63,8 +63,16 @@ public class MainView {
         // 用户信息面板
         userInfoPanel = new JPanel(new BorderLayout());
         userInfoLabel = new JLabel("User Info:");
-        userImageLabel = new JLabel(); // 这里可以用于显示用户图片
-        userImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // 创建一个 JPanel 用于显示用户头像
+        JPanel imagePanel = new JPanel();
+        userImageLabel = new JLabel(); // 用于显示用户图像
+        //userImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        imagePanel.add(userImageLabel); // 将 JLabel 添加到 JPanel 中
+        imagePanel.setLayout(new FlowLayout()); // 使用 FlowLayout 确保居中
+
+        //userImageLabel = new JLabel(); // 这里可以用于显示用户图片
+        //userImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // 将组件添加到框架
         frame.add(inputPanel, BorderLayout.NORTH);
@@ -72,7 +80,7 @@ public class MainView {
         frame.add(new JScrollPane(userTable), BorderLayout.SOUTH);
         frame.add(userInfoPanel, BorderLayout.EAST);
         userInfoPanel.add(userInfoLabel, BorderLayout.NORTH);
-        userInfoPanel.add(userImageLabel, BorderLayout.CENTER);
+        userInfoPanel.add(imagePanel, BorderLayout.CENTER);
 
         // 按钮事件处理
         loginButton.addActionListener(e -> handleLogin());

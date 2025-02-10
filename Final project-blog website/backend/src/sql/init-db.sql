@@ -16,5 +16,5 @@ INSERT INTO Users (username, password, realName, birthDate, blurb, isManager, im
     ('ketchumall', '12345', 'Ash Ketchum', '1990-05-22', 'Hey there! I am Ash Ketchum from Pallet Town, dreaming of becoming a Pokémon Master.', 0,'/default_img/pokomen.png'),
     ('pokemondoctor', '67890', 'Joy Nurtureheart', '1985-03-15', 'I am Nurse Joy, devoted to nurturing and healing Pokémon at the Pokémon Center.', 0,'/default_img/pokomen2.png'),
     ('growlitheisbae', 'pa55word', 'Jenny Ironwill', '1992-07-11', 'I am Officer Jenny, upholding peace and protecting Pokémon with my Growlithe.', 0,'/default_img/pokomen3.png'),
-    ('1514eva', 'pokeman', 'Samuel Oak', '1950-09-14', 'I am Professor Oak, passionate about Pokémon research and helping young trainers.', 0,'/default_img/pokomen3.png'),
-    ('mistyfan', 'watergym', 'Misty Waterflower', '1994-06-01', 'I am Misty, the Cerulean City Gym Leader, specializing in Water-type Pokémon.', 0,'/default_img/pokomen4.png');
+    ('1514eva', 'pokeman', 'Samuel Oak', '1950-09-14', 'I am Professor Oak, passionate about Pokémon research and helping young trainers.', 0,'/default_img/pokomen4.png'),
+    ('mistyfan', 'watergym', 'Misty Waterflower', '1994-06-01', 'I am Misty, the Cerulean City Gym Leader, specializing in Water-type Pokémon.', 0,'/default_img/pokomen5.png');
