@@ -18,7 +18,7 @@
   $: author = article?.username;
   $: isLoggedIn = data?.isLoggedIn; 
   $: user = data?.user;
-  $: name = user?.name;
+  $: name = user?.username;
   
 </script>
 
@@ -31,7 +31,7 @@
   <p>Loading...</p>
 {/if}
 
-
+<!-- 如果登录了并且是自己的文章，可以随便删评论 -->
 {#if isLoggedIn && name == author} 
   {#if article && id && user}
     <CommentsDeleteAll user={user} articleId={id} />
@@ -40,7 +40,7 @@
   {/if}
 {/if}
 
-
+<!-- 如果登录了不是自己的文章，可以删自己的评论 -->
 {#if isLoggedIn && name != author} 
   {#if article && id && user}
     <CommentsLogin user={user} articleId={id} />
@@ -49,10 +49,7 @@
   {/if}
 {/if}
 
-
-
-
-
+<!-- 如果没登陆，不能回复不能删评论 -->
 {#if !isLoggedIn} 
   {#if id}
     <CommentsLogout articleId={id} />
