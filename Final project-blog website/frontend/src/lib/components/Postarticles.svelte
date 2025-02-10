@@ -6,35 +6,39 @@
   let authorId = user.id;
   
   import {ARTICLES_URL} from "$lib/js/api-urls.js";
+  import RichTextEditor from './RichTextEditor.svelte';
  
 
   //post an article
   let success = false;
 
   async function handlePost() {
-  let error = false;
-  let success = false;
+    let error = false;
+    let success = false;
 
-  console.log("Submitting article:", { authorId, username, article_title, content });
+    console.log("Submitting article:", { authorId, username, article_title, content });
 
-  const response = await fetch(ARTICLES_URL, {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ authorId, username, article_title, content })
-  });
-    success = response.status === 201;
-    error = !success;
+    const response = await fetch(ARTICLES_URL, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ authorId, username, article_title, content })
+    });
+      success = response.status === 201;
+      error = !success;
 
-    if (success) {
-      alert("success!");
-    } else {
-      const errorMessage = await response.text(); 
-      console.error("Error response:", errorMessage);
-    }
-}
+      if (success) {
+        alert("Article posted successfully!");
+      } else {
+        const errorMessage = await response.text(); 
+        console.error("Error response:", errorMessage);
+        alert('Failed to post article: ' + errorMessage);
+      }
+  }
 
-
+  function handleContentUpdate(updatedContent) {
+    content = updatedContent;
+  }
 </script>
 
 
@@ -44,10 +48,10 @@
 
     <form on:submit|preventDefault={handlePost}>
 
-      <label for="firstName">Title:</label>
-      <input type="text" name="Username" bind:value={article_title} required />
+      <label for="article_title">Title:</label>
+      <input type="text" id="article_title" bind:value={article_title} required />
       <br> 
-      <label for="firstName">Content:</label>
+      <RichTextEditor {content} onUpdate={handleContentUpdate} />
       <br>
       <textarea bind:value={content} rows="12" required />
       <br>
