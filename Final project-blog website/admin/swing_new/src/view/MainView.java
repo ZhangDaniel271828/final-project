@@ -5,7 +5,11 @@ import model.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.File;
+import java.util.Arrays;
 import java.util.List;
+import java.net.URL;
+import javax.imageio.ImageIO;
 
 public class MainView {
     private JFrame frame;
@@ -100,6 +104,9 @@ public class MainView {
                                     String birthDate = user.getBirthDate(); // 获取出生日期
                                     userInfoLabel.setText("<html>Username: " + user.getUsername() + "<br>RealName: " +
                                             realName + "<br>DOB: " + birthDate + "<br>Blurb: " + personalInfo + "</html>");
+
+                                    // 加载用户头像
+                                    loadUserImage(user.getImageLink());
                                 }
                             } catch (Exception e) {
                                 userInfoLabel.setText("获取用户信息失败: " + e.getMessage());
@@ -116,6 +123,47 @@ public class MainView {
         frame.setVisible(true);
     }
 
+    private void loadUserImage(String imageLink) {
+        SwingWorker<ImageIcon, Void> worker = new SwingWorker<>() {
+            @Override
+            protected ImageIcon doInBackground() {
+                try {
+                    // 构建绝对路径
+                    String basePath = "/Users/gaoye/new_file_2/final-project/Final project-blog website/admin";
+                    File file = new File(basePath + imageLink);
+
+                    // 检查文件是否存在
+                    if (!file.exists()) {
+                        System.out.println("File does not exist: " + file.getAbsolutePath());
+                        return null; // 如果文件不存在，返回 null
+                    }
+
+                    // 读取图像
+                    Image image = ImageIO.read(file);
+                    return new ImageIcon(image.getScaledInstance(50, 50, Image.SCALE_SMOOTH)); // 缩放图像
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null; // 发生错误时返回 null
+                }
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    ImageIcon icon = get();
+                    if (icon != null) {
+                        userImageLabel.setIcon(icon); // 设置图像
+                    } else {
+                        userImageLabel.setIcon(null); // 发生错误时清空图像
+                    }
+                } catch (Exception e) {
+                    userImageLabel.setIcon(null); // 发生错误时清空图像
+                }
+            }
+        };
+        worker.execute(); // 启动工作线程
+    }
+
     private void handleLogin() {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword()); // 正确获取密码
@@ -124,7 +172,6 @@ public class MainView {
             JOptionPane.showMessageDialog(frame, "Login Successful");
             loadUserTable();
             logoutButton.setEnabled(true);
-            //deleteUserButton.setEnabled(true);
             deleteUserButton.setEnabled(false); // 登录后仍然禁用删除按钮
             loginButton.setEnabled(false); // 禁用登录按钮,来自于老师的要求
             loginButton.setForeground(Color.GRAY); // 变暗登录按钮，来自于老师的要求
@@ -140,8 +187,9 @@ public class MainView {
         passwordField.setText(""); // 清空密码字段
         tableModel.setRowCount(0); // 清空表格
         userInfoLabel.setText("用户信息:");
+        userImageLabel.setIcon(null); // 清空用户图像
         logoutButton.setEnabled(false);
-        deleteUserButton.setEnabled(false);//登出后，删除按钮禁用
+        deleteUserButton.setEnabled(false); // 登出后，删除按钮禁用
         loginButton.setEnabled(true); // 启用登录按钮，来自于老师的要求
         loginButton.setForeground(Color.BLACK); // 恢复登录按钮颜色
         loginButton.setBackground(null); // 恢复登录按钮背景
@@ -161,13 +209,17 @@ public class MainView {
                 try {
                     List<User> users = get(); // 获取用户列表
                     for (User user : users) {
-                        tableModel.addRow(new Object[]{
+                        Object[] rowData = new Object[]{
                                 user.getId(),
                                 user.getUsername(),
                                 user.isManager() ? "Manager" : "General user",
                                 user.getRealName(),
-                                user.getBirthDate()
-                        });
+                                user.getBirthDate(),
+                                user.getImageLink() // 确保这里添加了图像链接
+                        };
+                        tableModel.addRow(rowData);
+                        // 打印每行的数据以确认
+                        System.out.println("Row added: " + Arrays.toString(rowData));
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(frame, "加载用户失败: " + e.getMessage());
@@ -185,9 +237,13 @@ public class MainView {
             String role = (String) tableModel.getValueAt(selectedRow, 2);
             String realName = (String) tableModel.getValueAt(selectedRow, 3);
             String birthDate = (String) tableModel.getValueAt(selectedRow, 4);
+
             userInfoLabel.setText("<html>Username: " + username + "<br>Role: " + role +
                     "<br>RealName: " + realName + "<br>DOB: " + birthDate + "</html>");
-            // TODO: 显示用户图像（如果有的话）
+
+            // 显示用户图像
+            String imageLink = (String) tableModel.getValueAt(selectedRow, 5); // 假设图像链接在第六列
+            loadUserImage(imageLink); // 加载用户图像
         }
     }
 

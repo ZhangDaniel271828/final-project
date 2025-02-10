@@ -87,8 +87,9 @@ public class UserController {
                     String realName = jsonObject.getString("realName");
                     String birthDate = jsonObject.getString("birthDate");
                     String description = jsonObject.getString("blurb");
+                    String imageLink = jsonObject.getString("imageLink"); // 获取图片链接
 
-                    usersFromAPI.add(new User(id, username, isManager, realName, birthDate, description));
+                    usersFromAPI.add(new User(id, username, isManager, realName, birthDate, description, imageLink));
                 }
             }
         } catch (Exception e) {
@@ -135,8 +136,9 @@ public class UserController {
                 String realName = jsonObject.getString("realName");
                 String birthDate = jsonObject.getString("birthDate");
                 String description = jsonObject.getString("blurb");
+                String imageLink = jsonObject.getString("imageLink");
 
-                user = new User(id, username, isManager, realName, birthDate, description);
+                user = new User(id, username, isManager, realName, birthDate, description, imageLink);
             }
         } catch (Exception e) {
             e.printStackTrace();
