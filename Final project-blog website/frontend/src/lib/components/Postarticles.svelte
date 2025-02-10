@@ -6,7 +6,7 @@
   let authorId = user.id;
   
   import {ARTICLES_URL} from "$lib/js/api-urls.js";
-  import RichTextEditor from './RichTextEditor.svelte';
+  import TextEditor from './TextEditor.svelte';
  
 
   //post an article
@@ -51,9 +51,7 @@
       <label for="article_title">Title:</label>
       <input type="text" id="article_title" bind:value={article_title} required />
       <br> 
-      <RichTextEditor {content} onUpdate={handleContentUpdate} />
-      <br>
-      <textarea bind:value={content} rows="12" required />
+      <TextEditor {content} onUpdate={handleContentUpdate} />
       <br>
       <button type="submit">Post</button>
 
