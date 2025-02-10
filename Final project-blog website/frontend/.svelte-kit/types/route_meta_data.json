@@ -1,0 +1,30 @@
+{
+	"/": [
+		"src/routes/+layout.js",
+		"src/routes/+layout.js"
+	],
+	"/about": [
+		"src/routes/about/+page.js",
+		"src/routes/+layout.js"
+	],
+	"/about/myArticles": [
+		"src/routes/about/myArticles/+page.js",
+		"src/routes/+layout.js",
+		"src/routes/+layout.js"
+	],
+	"/about/myArticles/post": [
+		"src/routes/about/myArticles/post/+page.js",
+		"src/routes/+layout.js"
+	],
+	"/about/myArticles/[id]": [
+		"src/routes/about/myArticles/[id]/+page.js",
+		"src/routes/+layout.js"
+	],
+	"/login": [
+		"src/routes/login/+page.js",
+		"src/routes/+layout.js"
+	],
+	"/login/register": [
+		"src/routes/+layout.js"
+	]
+}
