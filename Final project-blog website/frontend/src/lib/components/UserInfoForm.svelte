@@ -8,7 +8,6 @@
   //User's basic info
   let username = user.username;
   let realName = user.realName;
-  let password = user.password;
   let birthDate = user.birthDate;
   let blurb = user.blurb;
 
@@ -23,7 +22,7 @@
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password, realName, birthDate, blurb })
+      body: JSON.stringify({ username, realName, birthDate, blurb })
     });
 
     success = response.status === 204;
@@ -56,10 +55,8 @@
 <form on:submit|preventDefault={handleSave}>
 
   <div class = "baiscInfo1"> 
-    <label for="firstName">Username:</label>
-    <input type="text" name="Username" bind:value={username} required />
-    <label for="password">Password:</label>
-    <input type="text" name="password" bind:value={password} required />
+    <label for="username">Username:</label>
+    <input type="text" name="username" bind:value={username} required />
     <label for="lastName">Real Name:</label>
     <input type="text" name="lastName" bind:value={realName} required />
     <label for="dob">Date of Birth:</label>

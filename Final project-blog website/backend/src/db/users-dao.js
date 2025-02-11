@@ -12,11 +12,20 @@ export async function getUserWithUsername(username) {
 }
 export async function getUserWithCredentials(username, password) {
   const db = await getDatabase();
-  return await db.get(
-    "SELECT * from Users WHERE username = ? AND password = ?",
-    username,
-    password
-  );
+  try {
+    const user = await db.get(
+      "SELECT * FROM Users WHERE username = ?",
+      username
+    );
+    
+    if (!user) return null;
+    
+    const match = await bcrypt.compare(password, user.password);
+    return match ? user : null;
+  } catch (error) {
+    console.error("Credentials check failed:", error);
+    return null;
+  }
 }
 const updateUserSchema = yup
   .object({

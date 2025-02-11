@@ -38,6 +38,11 @@
 	//handle register
 	async function registerUser() {
 		console.log({username, password, realName, birthDate, blurb});
+		if (password !== repeatPassword) {
+			alert("Passwords do not match!");
+			return;
+		}
+
 		if (usernameExists) {
 			alert("Username already exists. Please choose a different username.");
 			return;
@@ -60,7 +65,7 @@
 			}
 
 		}catch(error){
-      alert("error!");
+      		alert("Registration failed!");
 		}
 
 	}
