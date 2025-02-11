@@ -2,9 +2,6 @@ import { getDatabase } from "./database.js";
 import yup from "yup";
 import { updateDatabase } from "./util.js";
 
-
-
-
 export async function getArticles(sortBy, authorId) {
   const db = await getDatabase();
   let articles;

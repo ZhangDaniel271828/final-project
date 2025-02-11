@@ -24,18 +24,7 @@
   onMount(fetchArticles);
   $:data,fetchArticles();
 
-  let search = "";
-
-  function filter (search){
-    if(search != ""){
-      articles = articles.filter(article => 
-      article.article_title.toLowerCase().includes(search.toLowerCase())
-      );
-    }else{
-      fetchArticles();
-  }
-  }
-  $:filter(search);
+ 
 
 
   async function sortByAuthor() {
@@ -72,6 +61,20 @@
       console.error("error", error);
     }
   }  
+
+
+  let search = "";
+
+function filter (search){
+  if(search != ""){
+    articles = articles.filter(article => 
+    article.article_title.toLowerCase().includes(search.toLowerCase())
+    );
+  }else{
+    fetchArticles();
+}
+}
+$:filter(search);
 </script>
 
 

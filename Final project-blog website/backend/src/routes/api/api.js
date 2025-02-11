@@ -17,4 +17,7 @@ router.use("/comments", commentsRoutes);
 import articlesRoutes from "./api-articles.js"
 router.use("/articles", articlesRoutes);
 
+import likesRoutes from "./api-likes.js"
+router.use("/likes", likesRoutes);
+
 export default router;

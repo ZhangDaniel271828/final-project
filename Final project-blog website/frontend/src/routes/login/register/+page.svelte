@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import{USER_REGISTER} from "$lib/js/api-urls.js"
+	import{CHECK_USERNAME} from "$lib/js/api-urls.js"
 
 	//fomr variables
 	let username = "";
@@ -9,6 +10,7 @@
 	let realName = ""
 	let birthDate = "";
 	let blurb = "";
+
 
 // avator variables and function
 	let selectedImage = null;
@@ -36,9 +38,10 @@
 	//handle register
 	async function registerUser() {
 		console.log({username, password, realName, birthDate, blurb});
-
-
-
+		if (usernameExists) {
+			alert("Username already exists. Please choose a different username.");
+			return;
+		}
 		try{
 			const response = await fetch(USER_REGISTER, {
 				method: "POST",
@@ -62,6 +65,26 @@
 
 	}
 
+	//check if username exists
+	let usernameExists = false; 
+	//check if username exists
+	async function checkUsername() {
+    if (username) {
+        try {
+            const response = await fetch(`${CHECK_USERNAME}?username=${username}`);
+            if (!response.ok) { // check status code
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            usernameExists = !data.available;
+        } catch (error) {
+            console.error("Error checking username:", error);
+            usernameExists = false;
+        }
+    } else {
+        usernameExists = false;
+    }
+}
 </script>
 	
 
@@ -77,7 +100,12 @@
 	<!-- baisc form -->
 	<div class = "basic-form">
 		<label for="username">Username:</label>
-		<input type="text" name="username" bind:value={username} required />
+		<input type="text" name="username" bind:value={username} required on:change={checkUsername}/>
+
+		{#if usernameExists}
+			<br>
+			<span class="error">Username already exists. Please choose a different username.</span>
+		{/if}
 
 		<label for="password">Password:</label>
 		<input type="password" name="password" bind:value={password} required />

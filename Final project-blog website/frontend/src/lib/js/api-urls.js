@@ -21,6 +21,8 @@ export const USER_DELETE = `${BASE_URL}/auth/delete`;
 // Updating info about the currently authenticated user
 export const USER_REGISTER = `${BASE_URL}/auth/register`;
 
+// Check if username exists
+export const CHECK_USERNAME = `${BASE_URL}/auth/check-username`;
 
 //Comments-related URL
 export const COMMENTS_URL = `${BASE_URL}/comments`;
