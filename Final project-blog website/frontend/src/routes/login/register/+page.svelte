@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { USER_REGISTER, CHECK_USERNAME } from "$lib/js/api-urls.js"; 
+	import { USER_REGISTER, CHECK_USERNAME, USER_ME } from "$lib/js/api-urls.js"; 
+	import bcrypt from 'bcryptjs';
 
 	// form variables
 	let username = "";
@@ -57,6 +58,9 @@
 
 	// Handle register
 	async function registerUser() {
+
+		const hashedPassword = bcrypt.hashSync(password, 10);
+
 		console.log({ username, password, realName, birthDate, blurb });
 
 		console.log("Before checking usernameExists in registerUser:", usernameExists); // Debugging line
@@ -72,7 +76,7 @@
 				headers: {
 					"Content-Type": "application/json"
 				},
-				body: JSON.stringify({ username, password, realName, birthDate, blurb })
+				body: JSON.stringify({ username, password: hashedPassword, realName, birthDate, blurb })
 			});
 
 			if (response.status === 201) {
@@ -87,6 +91,40 @@
 			alert("Error!");
 		}
 	}
+
+	// Function to fetch user details
+	async function fetchUserDetails() {
+		const token = localStorage.getItem('authToken'); // Assuming token is stored in localStorage
+		if (!token) {
+			alert("Please log in first.");
+			goto("/login");
+			return;
+		}
+
+		try {
+			const response = await fetch(USER_ME, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${token}`
+				}
+			});
+
+			if (response.status === 401) {
+				alert("Unauthorized. Please log in again.");
+				goto("/login");
+			} else if (response.ok) {
+				const user = await response.json();
+				console.log("User details:", user);
+			} else {
+				alert("Failed to fetch user details.");
+			}
+		} catch (error) {
+			console.error("Error fetching user details:", error);
+			alert("Error fetching user details.");
+		}
+	}
+
 </script>
 
 <!-- HTML part -->

@@ -9,29 +9,75 @@ import bcrypt from "bcrypt";
 
 const router = express.Router();
 
-//Handle for ordinary user
-//login
+// Middleware to parse cookies
+import cookieParser from 'cookie-parser';
+router.use(cookieParser());
+
+// login
 router.post("/login", async (req, res) => {
-  // Get user with provided login details; return 401 if not found
   const { username, password } = req.body;
-  console.log(username, password);
-  const user = await getUserWithCredentials(username, password);
-  if (!user) return res.sendStatus(401);
+  console.log(password);
 
+  // get user
+  const user = await getUserWithUsername(username);
+  if (!user) {
+    return res.sendStatus(401); // user doesn't exist
+  }
 
-  // // 验证密码
-  // const passwordMatch = await bcrypt.compare(password, user.password);
-  // if (!passwordMatch) return res.sendStatus(401);
+  // validate password
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  console.log(password, user.password);
+  if (!passwordMatch) {
+    return res.sendStatus(401); // password doesn't match
+  }
 
- 
-  // Create user JWT token and send it back as a HTTP-only cookie along with a 204 status.
+  // create JWT token
   const jwtToken = createUserJWT(user.username);
-  // Expires 24 hours from now
-  const expires = new Date(Date.now() + 86400000);
-  // Send the JWT token in an HTTP-only cookie named authToken which expires in 24 hours.
-  return res.cookie("authToken", jwtToken, { httpOnly: true, expires }).json({ username });
+
+  // set HTTP-only Cookie
+  const expires = new Date(Date.now() + 86400000); // expire after 24 hours
+  res.cookie("authToken", jwtToken, { httpOnly: true, expires });
+
+  // Store token in localStorage for frontend
+  res.json({ username, token: jwtToken });
 
 });
+
+// register
+router.post("/register", async (req, res) => {
+  const { username, password, realName, birthDate, blurb } = req.body;
+
+  // check required fields
+  if (!username || !password || !realName || !birthDate || !blurb) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  // check if username is already taken
+  const existingUser = await getUserWithUsername(username);
+  if (existingUser) {
+    return res.status(409).json({ error: "Username already taken" });
+  }
+
+  // hash password
+  const hashedPassword = await bcrypt.hash(password, 10); 
+
+  // store user in database
+  try {
+    await createUser({
+      username,
+      password: hashedPassword,
+      realName,
+      birthDate,
+      blurb,
+    });
+    return res.sendStatus(201); // 201 Created
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
 //logout
 router.delete("/logout", (req, res) => {
   const expires = new Date(0); // Setting the expiry time of the cookie to some time in the past will cause it to be deleted.
@@ -52,35 +98,7 @@ router.delete("/delete", requiresAuthentication, async (req, res) => {
     return res.sendStatus(404);
   }
 });
-//register
-router.post("/register", async (req, res) => {
-  let userData = req.body
-  console.log(userData);
-  const { username, password, realName, birthDate, blurb } = userData;
 
-  // **1️⃣ 检查必填字段**
-  if (!username || !password || !realName || !birthDate || !blurb) {
-    return res.status(400);
-    // .json({ error: "Missing required fields" });
-  }
-  // // **2️⃣ 检查用户名是否已存在**
-  // const existingUser = await getUserWithUsername(username);
-  // if (existingUser) {
-  //   return res.status(409).json({ error: "Username already taken" });
-  // }
-
-
-  // // **3️⃣ 加密密码**
-  // const hashedPassword = await bcrypt.hash(password, 10); // 加盐哈希
-
-  // **4️⃣ 存入数据库**
-  try {
-    await createUser(userData);
-    return res.sendStatus(201); // 201 Created
-  } catch (error) {
-    return res.status(500).json({ error: "Internal server error" });
-  }
-});
 //check username
 router.get("/check-username", async (req, res) => {
   const {username} = req.query;
@@ -90,6 +108,32 @@ router.get("/check-username", async (req, res) => {
   }
   const existingUser = await getUserWithUsername(username);
   return res.json({ available: !existingUser });
+});
+
+// Middleware to authenticate requests
+import jwt from 'jsonwebtoken';
+const authenticateJWT = (req, res, next) => {
+  const token = req.cookies.authToken || req.headers.authorization?.split(' ')[1];
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      req.user = user;
+      next();
+    });
+  } else {
+    res.sendStatus(401);
+  }
+};
+
+// Protected route
+router.get("/users/me", authenticateJWT, async (req, res) => {
+  const user = await getUserWithUsername(req.user.username);
+  if (!user) {
+    return res.sendStatus(404);
+  }
+  res.json(user);
 });
 
 //Handle for manager.

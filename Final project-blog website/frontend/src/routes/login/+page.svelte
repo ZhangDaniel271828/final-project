@@ -2,17 +2,19 @@
 import { goto } from '$app/navigation'; 
 import { AUTH_LOGIN } from "$lib/js/api-urls.js";
 import { invalidateAll } from "$app/navigation";
+import bcrypt from 'bcryptjs';
 
   let username = "";
   let password = "";
   let error = false;
   async function handleSubmit() {
     error = false;
+    const hashedPassword = bcrypt.hashSync(password, 10);
     const response = await fetch(AUTH_LOGIN, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ username, hashedPassword })
     });
 
     if (response.status === 401) {

@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "module": "ESNext",
+      "target": "ESNext",
+      "moduleResolution": "node",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "verbatimModuleSyntax": true // 添加此行
+    },
+    "include": ["src/lib/components/TextEditor.svelte"],
+    "extends": "./.svelte-kit/tsconfig.json"
+}
