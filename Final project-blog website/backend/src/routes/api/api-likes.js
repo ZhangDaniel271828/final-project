@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import {getLikesCount, deleteLike, addLike} from '../../db/likes-dao.js';
+import {getLikesCount, deleteLike, addLike, checkIslike} from '../../db/likes-dao.js';
 
 router.get("/:articleId", async (req, res) => {
   try {
@@ -14,7 +14,6 @@ router.get("/:articleId", async (req, res) => {
 });
 router.post("/", async (req, res) => {
   try {
-    const articleId = req.params.articleId; // 获取文章 ID 参数
     const {user_Id, article_Id} = req.body; // 从请求体获取 userId
     // 调用 addLike 方法添加点赞
     const result = await addLike(user_Id, article_Id);
@@ -48,5 +47,26 @@ router.delete("/", async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+router.post("/check", async (req, res) => {
+  try {
+    const { user_Id, article_Id } = req.body;  // 从 body 获取参数
+
+    if (!user_Id || !article_Id) {
+      return res.status(400).json({ error: "Missing user_Id or article_Id" });
+    }
+    const result = await checkIslike(user_Id, article_Id);
+    
+    return res.json({ isLiked: result });  // 发送 JSON 响应
+  } catch (error) {
+    console.error("Error checkIsLike:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+
+
+
 
 export default router;

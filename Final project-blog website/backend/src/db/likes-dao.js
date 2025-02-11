@@ -19,6 +19,14 @@ export async function addLike(user_Id, article_Id) {
   return { success: true, message: "Like added" };
 }
 
+export async function checkIslike(user_Id, article_Id) {
+  const db = await getDatabase();
+  // 检查是否已经点赞过
+  const existingLike = await db.get("SELECT * FROM Likes WHERE user_id = ? AND article_id = ?", user_Id, article_Id);
+
+  return existingLike ? true : false;
+}
+
 
 export async function deleteLike(user_Id, article_Id) {
   const db = await getDatabase();
