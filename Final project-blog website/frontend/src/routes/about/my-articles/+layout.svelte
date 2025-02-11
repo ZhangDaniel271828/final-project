@@ -77,11 +77,11 @@
 <div class="layout">
   <nav class="nav">
     <h1>This is my Articles</h1>
+    <button on:click={()=>goto("/about/my-articles/post")} style="font-size: 20px; padding: 15px 30px;">Let's post an article!</button>
+
     <button on:click={() => fetchArticles()}>Sort articles by time</button>
     <button on:click={() => sortByAuthor()}>Sort articles by author</button>
     <button on:click={() => sortByTitle()}>Sort articles by title</button>
-    <button on:click={()=>goto("/about/my-articles/post")} style="font-size: 20px; padding: 15px 30px;">Let's post an article!</button>
-
     <label for="search">Search</label>
     <input type="text" name = "search"   bind:value={search}>
     {#each articles as article}

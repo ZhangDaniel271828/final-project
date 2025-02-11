@@ -1,3 +1,78 @@
+
+<!-- <script>
+  export let user;
+  let article_title = "";
+  let content = "";  
+  let username = user.username;
+  let authorId = user.id;
+  
+  import { ARTICLES_URL } from "$lib/js/api-urls.js";
+  import Editor from "@tinymce/tinymce-svelte";
+
+  let conf = {
+    height: 500,
+    menubar: false,
+    plugins: [
+      "a11ychecker", "advlist", "advcode", "advtable", "autolink", "checklist", "export",
+      "lists", "link", "image", "charmap", "preview", "anchor", "searchreplace", "visualblocks",
+      "powerpaste", "fullscreen", "formatpainter", "insertdatetime", "media", "table", "help", "wordcount"
+    ],
+    toolbar: "undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | " +
+      "bullist numlist checklist outdent indent | removeformat | code table image media help",
+    
+    // ✅ 允许粘贴 & 拖拽图片
+    image_advtab: true,
+    paste_data_images: true,
+
+    // ✅ 配置图片上传方式
+    images_upload_handler: async (blobInfo, success, failure) => {
+      let formData = new FormData();
+      formData.append("image", blobInfo.blob());
+
+      try {
+        const response = await fetch(`${ARTICLES_URL}/upload-image`, {
+          method: "POST",
+          body: formData
+        });
+
+        if (!response.ok) throw new Error("Image upload failed");
+
+        const data = await response.json();
+        success(data.imageUrl); // 🔥 TinyMCE 需要返回图片的 URL
+      } catch (error) {
+        console.error("Upload error:", error);
+        failure("Upload failed");
+      }
+    }
+  };
+
+  async function handlePost() {
+    let error = false;
+    let success = false;
+
+    console.log("Submitting article:", { authorId, username, article_title, content });
+
+    const response = await fetch(ARTICLES_URL, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ authorId, username, article_title, content })
+    });
+
+    success = response.status === 201;
+    error = !success;
+
+    if (success) {
+      alert("Article posted successfully!");
+      location.reload();
+    } else {
+      const errorMessage = await response.text(); 
+      console.error("Error response:", errorMessage);
+      alert("Failed to post article.");
+    }
+  }
+</script> -->
+
 <script>
   export let user;
   let article_title = "";
@@ -7,8 +82,6 @@
 
   import { ARTICLES_URL } from "$lib/js/api-urls.js";
   import Editor from "@tinymce/tinymce-svelte";
-
-
 
   let conf = {
     height: 500,
@@ -32,7 +105,7 @@
         const response = await fetch(`${ARTICLES_URL}/upload-image`, {
         method: "POST",
         body: formData
-      });
+        });
 
       if (!response.ok) throw new Error("Image upload failed");
 
@@ -42,20 +115,26 @@
 
       console.log("✅ 图片上传成功，返回的 URL:", imageUrl);
 
+      // 直接插入完整的绝对路径
+      tinymce.activeEditor.insertContent(`<img src="${imageUrl}">`);
 
-      
-        // 直接插入完整的绝对路径
-        // tinymce.activeEditor.insertContent(`<img src="${imageUrl}">`);
-        //success(imageUrl); 
+      //success(imageUrl); 
       } catch (error) {
-      console.error("❌ 上传失败:", error);
-      failure("Upload failed");
+        console.error("❌ 上传失败:", error);
+        failure("Upload failed");
       }
-    }
+}
+
+
+
+
+
+
   };
 
   async function handlePost() {
     console.log("Submitting article:", { authorId, username, article_title, content });
+
     const response = await fetch(ARTICLES_URL, {
       method: "POST",
       credentials: "include",
@@ -64,7 +143,8 @@
     });
 
     if (response.status === 201) {
-      alert("Article posted successfully!");      
+      alert("Article posted successfully!");
+      
       location.reload();
     } else {
       const errorMessage = await response.text();
