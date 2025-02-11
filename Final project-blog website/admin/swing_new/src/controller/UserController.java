@@ -113,7 +113,7 @@ public class UserController {
 
         try {
             // 构造 API URL
-            String apiUrl = "http://localhost:3000/api/users/" + userId; // 假设这是获取用户详细信息的 API
+            String apiUrl = "http://localhost:3000/api/users/" + userId; // 这是获取用户详细信息的 API
             URL url = new URL(apiUrl);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
