@@ -61,23 +61,18 @@
       console.error("error", error);
     }
   }  
-
-
   let search = "";
-
-function filter (search){
-  if(search != ""){
-    articles = articles.filter(article => 
-    article.article_title.toLowerCase().includes(search.toLowerCase())
-    );
-  }else{
-    fetchArticles();
-}
-}
-$:filter(search);
+  function filter (search){
+    if(search != ""){
+      articles = articles.filter(article => 
+      article.article_title.toLowerCase().includes(search.toLowerCase())
+      );
+    }else{
+      fetchArticles();
+  }
+  }
+  $:filter(search);
 </script>
-
-
 
 <div class="layout">
   <nav class="nav">
@@ -85,6 +80,8 @@ $:filter(search);
     <button on:click={() => fetchArticles()}>Sort articles by time</button>
     <button on:click={() => sortByAuthor()}>Sort articles by author</button>
     <button on:click={() => sortByTitle()}>Sort articles by title</button>
+    <button on:click={()=>goto("/about/my-articles/post")} style="font-size: 20px; padding: 15px 30px;">Let's post an article!</button>
+
     <label for="search">Search</label>
     <input type="text" name = "search"   bind:value={search}>
     {#each articles as article}

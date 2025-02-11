@@ -142,10 +142,10 @@
 </script>
 
 {#if article}
-  <h1>{article.article_title}</h1>
-  <h3>Author: {article.username}</h3>
-  <p>{article.content}</p>
-  <p>{article.createdAt}</p>
+    <h1>{article.article_title}</h1>
+    <h3>Author: {article.username}</h3>
+    {@html article.content}
+    <p>{article.createdAt}</p>
 
   <!-- like part -->
   <span>{likeCount} likes</span>
