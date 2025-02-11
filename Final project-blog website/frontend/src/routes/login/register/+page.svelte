@@ -35,17 +35,47 @@
 
 	//handle register
 	async function registerUser() {
-		console.log({username, password, realName, birthDate, blurb});
+		console.log({username, password, realName, birthDate, blurb,selectedImage,file });
 
-
+		let avatarPath = selectedImage || "";
 
 		try{
+			//头像上传
+			// **Step 1: 确保用户选择了头像**
+			if (!selectedImage && !file) {
+            alert("请选择一个头像或上传自定义头像！");
+            return;
+        }
+
+        // **Step 2: 处理头像上传（如果有文件）**
+        if (file) {
+            const formData = new FormData();
+            formData.append("avatar", file);
+
+            const avatarResponse = await fetch("/avatar/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!avatarResponse.ok) {
+                alert("头像上传失败，请重试");
+                return;
+            }
+
+            const avatarData = await avatarResponse.json();
+            avatarPath = avatarData.avatar; // 服务器返回的头像 URL
+        } else {
+            // **Step 3: 如果没有文件但用户选择了预设头像**
+            avatarPath = selectedImage;
+        }
+
+			//注册：
 			const response = await fetch(USER_REGISTER, {
 				method: "POST",
 				headers: {
 				"Content-Type": "application/json"
 				},
-				body: JSON.stringify({username, password, realName, birthDate, blurb})
+				body: JSON.stringify({username, password, realName, birthDate, blurb,imageLink: avatarPath})
 			});
 			
 			if (response.status === 201) {
@@ -143,6 +173,8 @@
 		{#if avatarPreview}
 		<img src={avatarPreview} alt="preview avatar" height="150px">
 		<p>Wow, your avatar looks cool!</p>
+		{:else}
+  			<img src={selectedImage} alt="selected avatar" height="150px">
 		{/if}
 
 		<button type="submit">Submit</button>

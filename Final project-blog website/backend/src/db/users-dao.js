@@ -48,7 +48,7 @@ export async function createUser(userData) {
   const db = await getDatabase();
   console.log("1");
   const dbResult = await db.run(
-    "INSERT INTO Users (username, password, realName, birthDate, blurb, isManager) VALUES (?, ?, ?, ?, ?, ?)",
+    "INSERT INTO Users (username, password, realName, birthDate, blurb, isManager,imageLink) VALUES (?, ?, ?, ?, ?, ?,?)",
     userData.username,
     userData.password,
     userData.realName,

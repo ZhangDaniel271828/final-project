@@ -29,7 +29,10 @@ router.post("/login", async (req, res) => {
   // Expires 24 hours from now
   const expires = new Date(Date.now() + 86400000);
   // Send the JWT token in an HTTP-only cookie named authToken which expires in 24 hours.
-  return res.cookie("authToken", jwtToken, { httpOnly: true, expires }).json({ username });
+  return res.cookie("authToken", jwtToken, { httpOnly: true, expires })
+  .json({ username: user.username,
+    imageLink: user.imageLink  // ✅ 这里返回头像 URL
+  });
 
 });
 //logout
@@ -54,9 +57,8 @@ router.delete("/delete", requiresAuthentication, async (req, res) => {
 });
 //register
 router.post("/register", async (req, res) => {
-  let userData = req.body
-  console.log(userData);
-  const { username, password, realName, birthDate, blurb } = userData;
+  
+  const { username, password, realName, birthDate, blurb,isManager,imageLink} = req.body;
 
   // **1️⃣ 检查必填字段**
   if (!username || !password || !realName || !birthDate || !blurb) {
@@ -64,18 +66,27 @@ router.post("/register", async (req, res) => {
     // .json({ error: "Missing required fields" });
   }
   // // **2️⃣ 检查用户名是否已存在**
-  // const existingUser = await getUserWithUsername(username);
+  const existingUser = await getUserWithUsername(username);
   // if (existingUser) {
   //   return res.status(409).json({ error: "Username already taken" });
   // }
 
 
   // // **3️⃣ 加密密码**
-  // const hashedPassword = await bcrypt.hash(password, 10); // 加盐哈希
-
+  const hashedPassword = await bcrypt.hash(password, 10); // 加盐哈希
+  // **4️⃣ 处理头像**
+  const newUser = { 
+    username, 
+    password: hashedPassword,  // 存加密后的密码
+    realName, 
+    birthDate, 
+    blurb,
+    isManager: isManager || 0, 
+    imageLink: imageLink || "/default_img/default.png" // 头像为空时使用默认头像
+  };
   // **4️⃣ 存入数据库**
   try {
-    await createUser(userData);
+    await createUser(newUser);
     return res.sendStatus(201); // 201 Created
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });

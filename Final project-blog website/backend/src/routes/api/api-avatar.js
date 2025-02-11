@@ -10,6 +10,7 @@ const storage = multer.diskStorage({
     destination: "./uploads/",
     filename: (req, file, cb) => {
         cb(null, `${req.user.id}_${Date.now()}_${file.originalname}`);
+        //cb(null, `${file.originalname}`)
     }
 });
 const upload = multer({ storage });
@@ -20,7 +21,7 @@ router.post("/upload", requiresAuthentication, upload.single("avatar"), async (r
 
     const db = await getDatabase();
     await db.run("UPDATE Users SET avatar = ? WHERE id = ?", req.file.path, req.user.id);
-
+    console.log("Received request at:", req.path);
     res.json({ message: "头像上传成功", avatar: req.file.path });
 });
 
