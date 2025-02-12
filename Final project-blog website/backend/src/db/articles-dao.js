@@ -59,7 +59,7 @@ export async function getAllArticles(sortBy) {
     articles = await db.all(
       `SELECT * FROM Articles
        ORDER BY username ASC`
-      );
+    );
   }
 
   if (sortBy == "article_title") {
@@ -69,30 +69,36 @@ export async function getAllArticles(sortBy) {
     );
   }
 
-  if (sortBy == "createdAt" ||!sortBy) {
+  if (sortBy == "createdAt" || !sortBy) {
     articles = await db.all(
       `SELECT * FROM Articles
        ORDER BY createdAt ASC`
     );
   }
 
-
-  
   return articles;
 }
 
 export async function addArticle(authorId, username, article_title, content) {
-  const db = await getDatabase(); 
-  await db.run(`
+  const db = await getDatabase();
+  await db.run(
+    `
     INSERT INTO Articles (authorId, username, article_title, content, createdAt)
     VALUES (?, ?, ?, ?, datetime('now', 'localtime'))
-  `, authorId, username, article_title, content);
+  `,
+    authorId,
+    username,
+    article_title,
+    content
+  );
 }
 
-const updateArticleSchema = yup.object({
-  article_title: yup.string().min(1).optional(),
-  content: yup.string().min(1).optional()
-  }).required();
+const updateArticleSchema = yup
+  .object({
+    article_title: yup.string().min(1).optional(),
+    content: yup.string().min(1).optional()
+  })
+  .required();
 
 export async function updateArticle(id, udpateData) {
   try {
@@ -109,35 +115,32 @@ export async function updateArticle(id, udpateData) {
     const result = await updateDatabase(db, "Articles", validatedUpdates, id);
 
     return result.changes > 0 ? { message: "Article updated successfully!" } : null;
-    } catch (error) {
-        console.error("Error updating article:", error);
-        throw new Error("Database error while updating article.");
-    }
+  } catch (error) {
+    console.error("Error updating article:", error);
+    throw new Error("Database error while updating article.");
+  }
 }
 
 export async function deleteArticle(id) {
   try {
-    const db = await getDatabase();  
-    const result = await db.run('DELETE FROM Articles WHERE id = ?', [id]); 
+    const db = await getDatabase();
+    const result = await db.run("DELETE FROM Articles WHERE id = ?", [id]);
     if (result.changes === 0) {
-      console.log(`No article found with id ${id}`);  
+      console.log(`No article found with id ${id}`);
     } else {
-      console.log(`Article with id ${id} deleted successfully`); 
+      console.log(`Article with id ${id} deleted successfully`);
     }
   } catch (error) {
-    console.error("Error deleting article:", error); 
+    console.error("Error deleting article:", error);
   }
 }
 
 export async function getArticleById(id) {
   try {
-    const db = await getDatabase(); 
-    const result = await db.get('SELECT * FROM Articles WHERE id = ?', [id]); 
-    return result; 
+    const db = await getDatabase();
+    const result = await db.get("SELECT * FROM Articles WHERE id = ?", [id]);
+    return result;
   } catch (error) {
     console.error("Error fetching article:", error);
   }
 }
-
-
-

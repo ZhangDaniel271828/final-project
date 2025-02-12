@@ -1,24 +1,24 @@
 import express from "express";
 const router = express.Router();
-import {getLikesCount, deleteLike, addLike, checkIslike} from '../../db/likes-dao.js';
+import { getLikesCount, deleteLike, addLike, checkIslike } from "../../db/likes-dao.js";
 
+//get likes by article id
 router.get("/:articleId", async (req, res) => {
   try {
-    const article_Id = req.params.articleId; // 获取 ID 参数
+    const article_Id = req.params.articleId;
     const count = await getLikesCount(article_Id);
-    return res.json({ count }); // 返回 JSON 对象
+    return res.json({ count });
   } catch (error) {
     console.error("Error fetching likes count:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+//give a like
 router.post("/", async (req, res) => {
   try {
-    const {user_Id, article_Id} = req.body; // 从请求体获取 userId
-    // 调用 addLike 方法添加点赞
+    const { user_Id, article_Id } = req.body; 
     const result = await addLike(user_Id, article_Id);
-
-    // 判断添加结果
     if (result.success) {
       return res.json({ message: result.message });
     } else {
@@ -30,13 +30,11 @@ router.post("/", async (req, res) => {
   }
 });
 
+//cancle a like
 router.delete("/", async (req, res) => {
   try {
-    const {user_Id, article_Id} = req.body;
-    // 调用 removeLike 方法删除点赞
+    const { user_Id, article_Id } = req.body;
     const result = await deleteLike(user_Id, article_Id);
-    
-    // 判断删除结果
     if (result.success) {
       return res.json({ message: result.message });
     } else {
@@ -48,25 +46,21 @@ router.delete("/", async (req, res) => {
   }
 });
 
+//check if user like specific article
 router.post("/check", async (req, res) => {
   try {
-    const { user_Id, article_Id } = req.body;  // 从 body 获取参数
+    const { user_Id, article_Id } = req.body; 
 
     if (!user_Id || !article_Id) {
       return res.status(400).json({ error: "Missing user_Id or article_Id" });
     }
     const result = await checkIslike(user_Id, article_Id);
-    
-    return res.json({ isLiked: result });  // 发送 JSON 响应
+
+    return res.json({ isLiked: result }); 
   } catch (error) {
     console.error("Error checkIsLike:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
-
-
-
 
 export default router;

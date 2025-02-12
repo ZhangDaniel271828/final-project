@@ -11,93 +11,104 @@
     try {
       const response = await fetch(`${ARTICLES_URL}/author/${userId}`, {
         method: "GET",
-        headers: {"Content-Type": "application/json"}
+        headers: { "Content-Type": "application/json" }
       });
       if (!response.ok) {
         throw new Error("can't get articles");
       }
-      articles = await response.json(); 
-      } catch (error) {
-        console.error("error", error);
-      }
+      articles = await response.json();
+    } catch (error) {
+      console.error("error", error);
+    }
   }
   onMount(fetchArticles);
-  $:data,fetchArticles();
+  $: data, fetchArticles();
 
- 
-
-
+  // sort article by author
   async function sortByAuthor() {
-  try {
+    try {
       const response = await fetch(`${ARTICLES_URL}/author/${userId}?sortBy=username`, {
-      method: "GET",
-      headers: {"Content-Type": "application/json"}
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
       });
 
-    if (!response.ok) {
-      throw new Error("can't get articles");
-    }
-    articles = await response.json(); 
-    console.log(articles);
-
+      if (!response.ok) {
+        throw new Error("can't get articles");
+      }
+      articles = await response.json();
+      console.log(articles);
     } catch (error) {
       console.error("error", error);
     }
-  }  
+  }
+
+  // sort article by title
   async function sortByTitle() {
-  try {
+    try {
       const response = await fetch(`${ARTICLES_URL}/author/${userId}?sortBy=article_title`, {
-      method: "GET",
-      headers: {"Content-Type": "application/json"}
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
       });
 
-    if (!response.ok) {
-      throw new Error("can't get articles");
-    }
-    articles = await response.json(); 
-    console.log(articles);
-
+      if (!response.ok) {
+        throw new Error("can't get articles");
+      }
+      articles = await response.json();
+      console.log(articles);
     } catch (error) {
       console.error("error", error);
     }
-  }  
+  }
+
+  //filter article by key words
   let search = "";
-  function filter (search){
-    if(search != ""){
-      articles = articles.filter(article => 
-      article.article_title.toLowerCase().includes(search.toLowerCase())
+  function filter(search) {
+    if (search != "") {
+      articles = articles.filter((article) =>
+        article.article_title.toLowerCase().includes(search.toLowerCase())
       );
-    }else{
+    } else {
       fetchArticles();
+    }
   }
-  }
-  $:filter(search);
+  $: filter(search);
 </script>
 
+
+
+<svelte:head>
+  <title>My Articles</title>
+</svelte:head>
+
+<!-- nav bar of my articles -->
 <div class="layout">
   <nav class="nav">
     <h1>This is my Articles</h1>
-    <button on:click={()=>goto("/about/my-articles/post")} style="font-size: 20px; padding: 15px 30px;">Let's post an article!</button>
+    <button
+      on:click={() => goto("/about/my-articles/post")}
+      style="font-size: 20px; padding: 15px 30px;">Let's post an article!
+    </button>
 
     <button on:click={() => fetchArticles()}>Sort articles by time</button>
     <button on:click={() => sortByAuthor()}>Sort articles by author</button>
     <button on:click={() => sortByTitle()}>Sort articles by title</button>
     <label for="search">Search</label>
-    <input type="text" name = "search"   bind:value={search}>
+    <input type="text" name="search" bind:value={search} />
     {#each articles as article}
-        <a href={`/about/my-articles/${article.id}`}>{article.article_title}</a>
+      <a href={`/about/my-articles/${article.id}`}>{article.article_title}</a>
     {/each}
   </nav>
 
   <main class="content">
-    <slot /> 
+    <slot />
   </main>
 </div>
 
 
+<!-- css part -->
 <style>
   .layout {
-    display: flex;         /* 使用 flex 布局 */
+    display: flex; 
     margin-top: 60px;
   }
 
@@ -106,7 +117,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width:30%;
+    width: 30%;
     margin-left: -100px;
   }
 
@@ -116,7 +127,6 @@
     padding: 8px 12px;
     background-color: #997fde;
     border-radius: 5px;
-    
   }
 
   .content {
@@ -126,14 +136,6 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     flex-grow: 1;
     padding: 20px;
-    margin-left: 20px; /* 让文章内容和导航栏之间增加 20px 间距 */
+    margin-left: 20px; 
   }
 </style>
-
-
-
-
-
-
-
-

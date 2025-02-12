@@ -45,28 +45,28 @@ CREATE TABLE Likes (
 
 
 INSERT INTO Users (username, password, realName, birthDate, blurb, isManager, imageLink) VALUES
-('SuperGaoye22', 'password123', 'Gaoye Super', '1990-05-14', 'A software enthusiast with a passion for coding.', 1, ''),
-('NanaDreamer', 'password456', 'Nana Kudo', '1993-07-22', 'Lover of books and art.', 0, ''),
-('CoderZ', 'password789', 'Zhang Wei', '1988-11-30', 'Tech geek and AI explorer.', 0, ''),
-('CreativeMax', 'password000', 'Max Li', '1995-01-15', 'A writer and gamer at heart.', 0, ''),
-('AlexGamer21', 'gamer123', 'Alex Chen', '1992-03-10', 'Avid gamer with a passion for strategy games.', 0, ''),
-('TechieTina', 'tina456', 'Tina Zhang', '1994-06-17', 'Technology lover and aspiring software engineer.', 0, ''),
-('BookwormLeo', 'leo789', 'Leo Wang', '1991-08-22', 'Book lover, especially fantasy and sci-fi novels.', 0, ''),
-('MusicFanJane', 'jane321', 'Jane Liu', '1990-12-05', 'Music enthusiast, with a special love for classical piano.', 0, ''),
-('ArtisticXia', 'xia654', 'Xia Wu', '1996-11-18', 'Art is my life, from painting to sculpture.', 0, ''),
-('EcoWarriorElla', 'ella987', 'Ella Li', '1993-09-30', 'Environmental advocate, passionate about sustainability.', 0, '');
+('SuperGaoye', 'gaoye12345', 'Gaoye Super', '1990-05-14', 'Hi, I am gaoye, I am a manager for this website!', 1, 'Super.jpg'),
+('NanaDreamer', 'password456', 'Nana Kudo', '1993-07-22', 'Lover of books and art.', 0, 'pokomen.png'),
+('CoderZ', 'password789', 'Zhang Wei', '1988-11-30', 'Tech geek and AI explorer.', 0, 'pokomen1.png'),
+('CreativeMax', 'password000', 'Max Li', '1995-01-15', 'A writer and gamer at heart.', 0, 'pokomen2.png'),
+('AlexGamer21', 'gamer123', 'Alex Chen', '1992-03-10', 'Avid gamer with a passion for strategy games.', 0, 'pokomen3.png'),
+('TechieTina', 'tina456', 'Tina Zhang', '1994-06-17', 'Technology lover and aspiring software engineer.', 0, 'pokomen4.png'),
+('BookwormLeo', 'leo789', 'Leo Wang', '1991-08-22', 'Book lover, especially fantasy and sci-fi novels.', 0, 'pokomen5.png'),
+('MusicFanJane', 'jane321', 'Jane Liu', '1990-12-05', 'Music enthusiast, with a special love for classical piano.', 0, 'pokomen.png'),
+('ArtisticXia', 'xia654', 'Xia Wu', '1996-11-18', 'Art is my life, from painting to sculpture.', 0, 'pokomen.png'),
+('EcoWarriorElla', 'ella987', 'Ella Li', '1993-09-30', 'Environmental advocate, passionate about sustainability.', 0, 'pokomen.png');
 
 INSERT INTO Articles (authorId, username, article_title, content) VALUES
-(1, 'SuperGaoye22', 'The Future of Artificial Intelligence', 'Artificial intelligence is changing the world at an unprecedented pace. We are witnessing breakthroughs in many fields, from healthcare to finance. In this article, we will explore the possibilities AI holds for the future.'),
-(1, 'SuperGaoye22', 'The Beauty of Minimalism', 'Minimalism is more than just an aesthetic. It’s a lifestyle that emphasizes simplicity and contentment. This article discusses the benefits of adopting a minimalist approach to life and design.'),
-(1, 'SuperGaoye22', 'Exploring Quantum Computing', 'Quantum computing promises to revolutionize computing power. But what exactly is it? Let’s dive into the basics of quantum mechanics and explore its potential in solving problems that are beyond the capabilities of classical computers.'),
-(1, 'SuperGaoye22', 'The Power of Video Games', 'Video games have evolved into a form of art that can influence creativity and problem-solving. In this article, we will explore how video games can enhance cognitive skills and imagination.'),
-(1, 'SuperGaoye22', 'The Cognitive Benefits of Strategy Games', 'Strategy games offer more than just entertainment—they enhance our cognitive abilities, improve decision-making, and promote critical thinking. Let’s explore why strategy games are so beneficial.'),
-(1, 'SuperGaoye22', 'Machine Learning and Its Applications', 'Machine learning is revolutionizing industries across the globe. From predicting trends to automating processes, this technology has a vast range of applications. This article looks at the most significant uses of machine learning today.'),
-(1, 'SuperGaoye22', 'Fantasy Literature: A Gateway to Imagination', 'Fantasy literature allows readers to escape into magical worlds filled with adventure and wonder. This article explores the power of fantasy literature in sparking creativity and imagination.'),
-(1, 'SuperGaoye22', 'The Timelessness of Classical Music', 'Classical music has stood the test of time. In this article, we examine why classical compositions remain relevant and continue to inspire generations of musicians and listeners.'),
-(1, 'SuperGaoye22', 'Modern Art: A Reflection of Society', 'Modern art has been a subject of much debate. In this article, we discuss how modern art reflects the complexities and challenges of contemporary society.'),
-(1, 'SuperGaoye22', 'Sustainability in Everyday Life', 'Living sustainably is no longer just a trend—it’s a necessity. This article explores small changes we can make in our daily lives to reduce our carbon footprint and live more sustainably.');
+(1, 'SuperGaoye', 'The Future of Artificial Intelligence', 'Artificial intelligence is changing the world at an unprecedented pace. We are witnessing breakthroughs in many fields, from healthcare to finance. In this article, we will explore the possibilities AI holds for the future.'),
+(1, 'SuperGaoye', 'The Beauty of Minimalism', 'Minimalism is more than just an aesthetic. It’s a lifestyle that emphasizes simplicity and contentment. This article discusses the benefits of adopting a minimalist approach to life and design.'),
+(1, 'SuperGaoye', 'Exploring Quantum Computing', 'Quantum computing promises to revolutionize computing power. But what exactly is it? Let’s dive into the basics of quantum mechanics and explore its potential in solving problems that are beyond the capabilities of classical computers.'),
+(1, 'SuperGaoye', 'The Power of Video Games', 'Video games have evolved into a form of art that can influence creativity and problem-solving. In this article, we will explore how video games can enhance cognitive skills and imagination.'),
+(1, 'SuperGaoye', 'The Cognitive Benefits of Strategy Games', 'Strategy games offer more than just entertainment—they enhance our cognitive abilities, improve decision-making, and promote critical thinking. Let’s explore why strategy games are so beneficial.'),
+(1, 'SuperGaoye', 'Machine Learning and Its Applications', 'Machine learning is revolutionizing industries across the globe. From predicting trends to automating processes, this technology has a vast range of applications. This article looks at the most significant uses of machine learning today.'),
+(1, 'SuperGaoye', 'Fantasy Literature: A Gateway to Imagination', 'Fantasy literature allows readers to escape into magical worlds filled with adventure and wonder. This article explores the power of fantasy literature in sparking creativity and imagination.'),
+(1, 'SuperGaoye', 'The Timelessness of Classical Music', 'Classical music has stood the test of time. In this article, we examine why classical compositions remain relevant and continue to inspire generations of musicians and listeners.'),
+(1, 'SuperGaoye', 'Modern Art: A Reflection of Society', 'Modern art has been a subject of much debate. In this article, we discuss how modern art reflects the complexities and challenges of contemporary society.'),
+(1, 'SuperGaoye', 'Sustainability in Everyday Life', 'Living sustainably is no longer just a trend—it’s a necessity. This article explores small changes we can make in our daily lives to reduce our carbon footprint and live more sustainably.');
 
 
 -- 点赞数据

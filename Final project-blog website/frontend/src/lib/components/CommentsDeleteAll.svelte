@@ -180,37 +180,63 @@
 
 <!-- CSS part -->
 <style>
+  :root {
+    --primary-color: #ffb6c1; 
+    --secondary-color: #2b2d42; 
+    --text-color: #edf2f4; 
+  }
+
+  /* Comment section overall container */
   .comments {
-    background-color: rgb(229, 221, 239);
+    background-color: var(--secondary-color);
     padding-top: 5px;
     padding-bottom: 20px;
+    color: var(--text-color);
   }
+
+  /* Title */
   h2 {
     margin-left: 50px;
+    color: var(--primary-color);
   }
+
+  /* Reply form margin */
   .reply-form {
     margin-left: 40px;
   }
 
+  /* Main comment style */
   .mainComments {
     max-width: 600px;
-    border: 1px dashed rgb(6, 35, 140);
-    background-color: rgb(229, 248, 216);
+    border: 1px dashed var(--primary-color);
+    background-color: #3a3c58; 
     padding: 10px;
     margin-top: 20px;
     margin-left: 40px;
+    color: var(--text-color);
   }
+
+  /* Timestamp style */
   .timeStamp {
     font-size: small;
+    color: var(--text-color);
   }
+
+  /* First level reply (child comment) */
   .childComment1 {
-    border: 1px dashed rgb(6, 35, 140);
+    border: 1px dashed var(--primary-color);
+    background-color: #424a66;
     padding-left: 30px;
     margin: 10px;
+    color: var(--text-color);
   }
+
+  /* Second level reply (grandchild comment) */
   .childComment2 {
-    border: 1px dashed rgb(6, 35, 140);
+    border: 1px dashed var(--primary-color);
+    background-color: #4a526e; 
     padding-left: 50px;
     margin: 10px;
+    color: var(--text-color);
   }
 </style>

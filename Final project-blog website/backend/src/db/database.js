@@ -5,12 +5,11 @@ import fs from "fs";
 /** @type Database<sqlite3.Database, sqlite3.Statement> */
 let db;
 
-// 指定固定的数据库文件路径，非常重要
+//Specify a fixed database file path, very important
 const DB_FILE_PATH = "../backend/project-database.db";
 
-// 指定初始化脚本的固定路径，非常重要
+//Specify the fixed path of the initialization script, which is very important
 const INIT_SCRIPT_PATH = "../backend/src/sql/init-db.sql";
-
 
 /**
  * Opens the database. If it doesn't exist, it initializes it.

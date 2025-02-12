@@ -2,24 +2,20 @@ import yup from "yup";
 import { getDatabase } from "./database.js";
 import { updateDatabase } from "./util.js";
 
-
-
 //For ordinary user
-
+//get user by username
 export async function getUserWithUsername(username) {
   const db = await getDatabase();
   return await db.get("SELECT * from Users WHERE username = ?", username);
 }
+//get user with credentials
 export async function getUserWithCredentials(username, password) {
   const db = await getDatabase();
   try {
-    const user = await db.get(
-      "SELECT * FROM Users WHERE username = ?",
-      username
-    );
-    
+    const user = await db.get("SELECT * FROM Users WHERE username = ?", username);
+
     if (!user) return null;
-    
+
     const match = await bcrypt.compare(password, user.password);
     return match ? user : null;
   } catch (error) {
@@ -27,6 +23,8 @@ export async function getUserWithCredentials(username, password) {
     return null;
   }
 }
+
+//Verify whether the uploaded information is compliant
 const updateUserSchema = yup
   .object({
     username: yup.string().min(3).optional(),
@@ -38,20 +36,21 @@ const updateUserSchema = yup
   .required();
 export async function updateUser(id, udpateData) {
   // Validate incoming data (throw error if invalid)
-  
   const parsedUpdateData = updateUserSchema.validateSync(udpateData, {
     abortEarly: false,
     stripUnknown: true
   });
- 
+
   console.log(parsedUpdateData);
   // Build and run update statement
   const db = await getDatabase();
   const dbResult = await updateDatabase(db, "Users", parsedUpdateData, id);
- 
+
   // Return true if changes applied, false otherwise
   return dbResult.changes > 0;
 }
+
+// create an new user
 export async function createUser(userData) {
   console.log("createUser function");
   const db = await getDatabase();
@@ -68,11 +67,9 @@ export async function createUser(userData) {
   );
 }
 
-
-
 // For manamger
 // get all users
-export async function getAllusers(){
+export async function getAllusers() {
   const db = await getDatabase();
   const allUsers = await db.all("SELECT * FROM Users");
   return allUsers;
@@ -82,9 +79,10 @@ export async function getAllusers(){
 export async function deleteUserById(id) {
   const db = await getDatabase();
   const result = await db.run("DELETE FROM Users WHERE id = ?", id);
-  return result.changes; 
+  return result.changes;
 }
 
+// get user by id
 export async function getUserWithId(id) {
   const db = await getDatabase();
   return await db.get("SELECT * from Users WHERE id = ?", id);

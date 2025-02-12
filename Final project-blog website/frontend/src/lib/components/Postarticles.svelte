@@ -36,23 +36,21 @@
       "alignright alignjustify | bullist numlist outdent indent | " +
       "removeformat | image media help",
     image_advtab: true,
-    paste_data_images: true, // 允许粘贴 Base64 图片
+    paste_data_images: true, 
     images_upload_handler: function (blobInfo) {
       return new Promise((resolve, reject) => {
-        // 使用 FileReader 将图片转换为 base64 格式
+        
         const reader = new FileReader();
         reader.onloadend = function () {
-          // 获取 base64 字符串
-          const base64String = reader.result.split(",")[1]; // 去掉前缀部分
-          // 返回 base64 字符串
+        
+          const base64String = reader.result.split(",")[1]; 
 
-          resolve("data:image/jpeg;base64," + base64String); // 根据你的图片格式调整 mime 类型（image/jpeg）
+          resolve("data:image/jpeg;base64," + base64String); 
         };
 
         reader.onerror = function () {
           reject(new Error("Image upload failed: Unable to read file."));
-        }; // 读取图片为 base64 格式
-
+        }; 
         reader.readAsDataURL(blobInfo.blob());
       });
     }
@@ -94,66 +92,158 @@
   </div>
 </form>
 
+<!-- css part   -->
+
 <style>
   .post-container {
     max-width: 800px;
-    margin: auto;
-    padding: 15px;
-    border: 1px solid #ccc;
-    background: #f9f9f9;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-radius: 8px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(45, 55, 72, 0.1);
+    border: 2px solid rgba(255, 214, 231, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-container::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 214, 231, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: shine 8s infinite;
+  }
+
+  @keyframes shine {
+    0% {
+      transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+      transform: translateX(100%) rotate(45deg);
+    }
   }
 
   h1 {
     text-align: center;
-    color: #333;
+    color: #2d3748;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #2d3748 0%, #ffd6e7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(255, 214, 231, 0.2);
   }
 
   label {
-    font-weight: bold;
-    margin-top: 5px;
+    color: #2d3748;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem;
+    display: block;
+    font-size: 1.1rem;
   }
 
   input {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+    padding: 1rem;
+    border: 2px solid #ffd6e7;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  input:focus {
+    border-color: #2d3748;
+    box-shadow: 0 0 0 4px rgba(255, 214, 231, 0.3);
+    outline: none;
+  }
+
+  .tox-tinymce {
+    border: 2px solid #ffd6e7 !important;
+    border-radius: 1rem !important;
+    margin: 1rem 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .tox-tinymce:hover {
+    box-shadow: 0 4px 15px rgba(255, 214, 231, 0.3);
   }
 
   .button-group {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 1.5rem;
+    margin-top: 2rem;
   }
 
   button {
-    padding: 8px 16px;
+    padding: 1rem 2rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
   }
 
   .primary {
-    background: #28a745;
+    background: linear-gradient(135deg, #ffd6e7 0%, #2d3748 100%);
     color: white;
+    box-shadow: 0 4px 15px rgba(45, 55, 72, 0.2);
   }
 
   .primary:hover {
-    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(45, 55, 72, 0.3);
   }
 
   .secondary {
-    background: #ccc;
+    background: transparent;
+    border: 2px solid #ffd6e7;
+    color: #2d3748;
   }
 
   .secondary:hover {
-    background: #aaa;
+    background: rgba(255, 214, 231, 0.1);
+    transform: translateY(-2px);
+  }
+  .tox-toolbar__primary {
+    background: rgba(255, 214, 231, 0.1) !important;
+    border-bottom: 1px solid #ffd6e7 !important;
+  }
+
+  .tox-tbtn:hover {
+    background: rgba(45, 55, 72, 0.1) !important;
+  }
+
+  .tox-tbtn svg {
+    fill: #2d3748 !important;
+  }
+
+  body {
+    background: linear-gradient(135deg, #f8f4ff 0%, #fff5f7 100%);
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
   }
 </style>

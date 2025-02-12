@@ -8,95 +8,88 @@
   import { ARTICLES_URL } from "$lib/js/api-urls.js";
   import { goto } from "$app/navigation";
   import { LIKES_URL } from "$lib/js/api-urls.js";
- 
+
   //baisc varies
-  $: article = data?.article; 
-    $: id = article?.id;
-    $: author = article?.username;
-  
+  $: article = data?.article;
+  $: id = article?.id;
+  $: author = article?.username;
+
   $: user = data?.user;
-    $: isLoggedIn = data?.isLoggedIn; 
-    $: user_Id = user?.id;
-    $: name = user?.username;
- 
+  $: isLoggedIn = data?.isLoggedIn;
+  $: user_Id = user?.id;
+  $: name = user?.username;
+
   let edit = false;
-  
-  
+
   // delete an article
-  async function deleteArticle(){
+  async function deleteArticle() {
     try {
       const response = await fetch(`${ARTICLES_URL}/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
-        },
+          "Content-Type": "application/json"
+        }
       });
       if (response.ok) {
         alert("Article deleted successfully");
         await invalidateAll();
         goto("/about/my-articles");
-        
       } else {
         alert("Failed to delete article");
       }
     } catch (error) {
-      console.error('Error deleting article:', error);
-      alert('Failed to delete article!');
+      console.error("Error deleting article:", error);
+      alert("Failed to delete article!");
     }
-    
-
   }
 
-  //like part 
+  //like part
   let likeCount = 0;
   let isLiked = false;
-  let buttonClick =1;
+  let buttonClick = 1;
 
-  // display likes 
+  // display likes
   async function getLikes(id) {
     if (!id) return;
     try {
       const response = await fetch(`${LIKES_URL}/${id}`, {
         method: "GET",
-        headers: {"Content-Type": "application/json"}
-        });
+        headers: { "Content-Type": "application/json" }
+      });
       if (!response.ok) {
         throw new Error("can't get articles");
       }
       const data = await response.json();
-      likeCount = data.count; // 假设后端返回 { count: 10 } 
-           
+      likeCount = data.count;
       console.log("likeCount:", likeCount);
-      } catch (error) {
-        console.error("error", error);
-      }
+    } catch (error) {
+      console.error("error", error);
+    }
   }
   //check isLiked
   async function checkIsLiked(user_Id, id) {
     const article_Id = id;
-  try {
-    console.log("user_Id:", user_Id, "article_Id:", article_Id);
-    
-    const response = await fetch(`${LIKES_URL}/check`, {
-      method: "POST", 
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_Id, article_Id })
-    });
+    try {
+      console.log("user_Id:", user_Id, "article_Id:", article_Id);
 
-    if (!response.ok) {
-      throw new Error("Failed to check like status");
+      const response = await fetch(`${LIKES_URL}/check`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_Id, article_Id })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to check like status");
+      }
+
+      const data = await response.json();
+      console.log("Response data:", data);
+      isLiked = data.isLiked;
+    } catch (error) {
+      console.error("Error checking like status:", error);
     }
-
-    const data = await response.json();  // 解析 JSON 响应
-    console.log("Response data:", data); // 调试输出
-
-    isLiked = data.isLiked; 
-
-  } catch (error) {
-    console.error("Error checking like status:", error);
   }
-  }
-  
+
   // add a like
   async function addLike(user_Id, id) {
     const article_Id = id;
@@ -105,7 +98,7 @@
       const response = await fetch(LIKES_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_Id, article_Id}) // 传递数据
+        body: JSON.stringify({ user_Id, article_Id }) 
       });
       if (!response.ok) {
         throw new Error("Failed to add like");
@@ -116,16 +109,16 @@
     } catch (error) {
       console.error("Error adding like:", error);
     }
-  } 
+  }
   //delete a like
-  async function deleteLike(user_Id, id){
+  async function deleteLike(user_Id, id) {
     const article_Id = id;
     console.log("user_Id:", user_Id, "article_Id:", article_Id);
     try {
       const response = await fetch(LIKES_URL, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_Id, article_Id}) // 传递数据
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_Id, article_Id }) 
       });
       if (!response.ok) {
         throw new Error("Failed to delete like");
@@ -140,14 +133,12 @@
 
   //reactive: "The function re-executes when any of the three variables change, displaying the like count and whether the article is liked."
   $: if (id && user_Id && buttonClick !== null) {
-      getLikes(id);
-      checkIsLiked(user_Id, id);
+    getLikes(id);
+    checkIsLiked(user_Id, id);
   }
-
 </script>
 
-<!-- 文章部分 -->
-
+<!-- article part -->
 {#if article && !edit}
   <h1>{article.article_title}</h1>
   <h3>Author: {article.username}</h3>
@@ -164,33 +155,27 @@
     <p>You have not liked yet, you can like this article</p>
   {/if}
 
-  <button on:click={() => edit = true}>edit</button>
+  <button on:click={() => (edit = true)}>edit</button>
 
   <!-- delete part -->
-  <span><button on:click = {deleteArticle}>Delete my article</button></span>
-  <br>
-  <br>
-
+  <span><button on:click={deleteArticle}>Delete my article</button></span>
+  <br />
+  <br />
 {:else if article && edit}
   <EditArticle articleId={id} />
 {:else}
   <p>Loading...</p>
 {/if}
 
-
-
-<!-- 评论部分 -->
+<!-- comments part -->
 {#if edit == false}
-
-  {#if isLoggedIn && name == author} 
+  {#if isLoggedIn && name == author}
     {#if article && id && user}
-      <CommentsDeleteAll user={user} articleId={id} />
+      <CommentsDeleteAll {user} articleId={id} />
     {:else}
       <p>Loading...</p>
     {/if}
   {/if}
-
 {:else}
-  <p>Editing...</p >
+  <p>Editing...</p>
 {/if}
-

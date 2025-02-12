@@ -1,10 +1,158 @@
-/* System Fonts as used by GitHub */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
+:root {
+  --primary-color: #ffb6c1; /* Primary color - light pink */
+  --secondary-color: #0a3140; /* Background color - dark gray */
+  --text-color: #edf2f4; /* Text color - near white */
+  --hover-color: rgba(
+    255,
+    182,
+    193,
+    0.15
+  ); /* Hover background color, semi-transparent based on light pink */
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.25); /* Shadow effect */
+  --radius: 8px; /* Border radius size */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background: var(--secondary-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Navigation bar styles */
+nav {
+  background-color: var(--secondary-color);
+  padding: 1rem 2rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--primary-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav ul {
+  list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column;
+  gap: 1.5rem;
+}
+
+nav li {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+}
+
+nav li:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-2px);
+}
+
+nav a,
+nav button {
+  color: var(--text-color);
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+nav a.active {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Container layout */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Home page content styles */
+h1 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+/* Button styles */
+button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: #ffaeb9; /* Slightly darker light pink */
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* Loading animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  border: 4px solid var(--primary-color);
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .container {
+    margin: 1rem auto;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
 }
