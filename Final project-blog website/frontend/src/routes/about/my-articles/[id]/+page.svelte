@@ -1,6 +1,8 @@
 <script>
   export let data;
   import CommentsDeleteAll from "$lib/components/CommentsDeleteAll.svelte";
+  import EditArticle from "$lib/components/EditArticle.svelte";
+
   import { page } from "$app/stores";
   import { invalidateAll } from "$app/navigation";
   import { ARTICLES_URL } from "$lib/js/api-urls.js";
@@ -17,6 +19,9 @@
     $: user_Id = user?.id;
     $: name = user?.username;
  
+  let edit = false;
+  
+  
   // delete an article
   async function deleteArticle(){
     try {
@@ -141,11 +146,13 @@
 
 </script>
 
-{#if article}
-    <h1>{article.article_title}</h1>
-    <h3>Author: {article.username}</h3>
-    {@html article.content}
-    <p>{article.createdAt}</p>
+<!-- 文章部分 -->
+
+{#if article && !edit}
+  <h1>{article.article_title}</h1>
+  <h3>Author: {article.username}</h3>
+  {@html article.content}
+  <p>{article.createdAt}</p>
 
   <!-- like part -->
   <span>{likeCount} likes</span>
@@ -157,22 +164,33 @@
     <p>You have not liked yet, you can like this article</p>
   {/if}
 
+  <button on:click={() => edit = true}>edit</button>
 
   <!-- delete part -->
   <span><button on:click = {deleteArticle}>Delete my article</button></span>
   <br>
   <br>
 
+{:else if article && edit}
+  <EditArticle articleId={id} />
 {:else}
   <p>Loading...</p>
 {/if}
 
-<!-- 是自己的文章，可以随便删评论 -->
-{#if isLoggedIn && name == author} 
-  {#if article && id && user}
-    <CommentsDeleteAll user={user} articleId={id} />
-  {:else}
-    <p>Loading...</p>
+
+
+<!-- 评论部分 -->
+{#if edit == false}
+
+  {#if isLoggedIn && name == author} 
+    {#if article && id && user}
+      <CommentsDeleteAll user={user} articleId={id} />
+    {:else}
+      <p>Loading...</p>
+    {/if}
   {/if}
+
+{:else}
+  <p>Editing...</p >
 {/if}
 
