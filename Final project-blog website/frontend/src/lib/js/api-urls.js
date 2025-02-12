@@ -27,3 +27,6 @@ export const ARTICLE_UPDATE = `${BASE_URL}/articles/update`;
 
 //likes-related URL
 export const LIKES_URL = `${BASE_URL}/likes`;
+
+//Avatar-related URL
+export const AVATARUPLOAD_URL = `${BASE_URL}/avatar/upload`;

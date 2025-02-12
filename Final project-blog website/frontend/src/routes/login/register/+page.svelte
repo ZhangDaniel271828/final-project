@@ -1,7 +1,8 @@
 <script>
 	import { goto } from '$app/navigation';
-	import{USER_REGISTER} from "$lib/js/api-urls.js"
-	import{CHECK_USERNAME} from "$lib/js/api-urls.js"
+	import{USER_REGISTER, CHECK_USERNAME, AVATARUPLOAD_URL} from "$lib/js/api-urls.js"
+	import{} from "$lib/js/api-urls.js"
+
 
 	//fomr variables
 	let username = "";
@@ -36,8 +37,10 @@
 	}
 
 	//handle register
+	let imageLink ="";
 	async function registerUser() {
-		console.log({username, password, realName, birthDate, blurb});
+
+		//check password and username
 		if (password !== repeatPassword) {
 			alert("Passwords do not match!");
 			return;
@@ -47,13 +50,40 @@
 			alert("Username already exists. Please choose a different username.");
 			return;
 		}
+
 		try{
+			//avatar upload
+			if (!selectedImage && !file) {
+				alert("请选择一个头像或上传自定义头像！");
+				return;
+			}			
+			console.log(file);
+			if (file){
+				const formData = new FormData();
+				formData.append("avatar", file);
+				const avatarResponse = await fetch(AVATARUPLOAD_URL, {
+					method: "POST",
+					body: formData
+				});
+			if (!avatarResponse.ok) {
+				alert("头像上传失败，请重试");
+				return;
+			}
+			const avatarData = await avatarResponse.json();
+			imageLink = avatarData.avatar; // 服务器返回的头像 URL
+
+			}else {
+				imageLink = selectedImage;
+			}
+
+		//check information of register
+			console.log({username, password, realName, birthDate, blurb, imageLink});
 			const response = await fetch(USER_REGISTER, {
 				method: "POST",
 				headers: {
 				"Content-Type": "application/json"
 				},
-				body: JSON.stringify({username, password, realName, birthDate, blurb})
+				body: JSON.stringify({username, password, realName, birthDate, blurb, imageLink})
 			});
 			
 			if (response.status === 201) {
@@ -65,9 +95,8 @@
 			}
 
 		}catch(error){
-      		alert("Registration failed!");
+      alert("Registration failed!");
 		}
-
 	}
 
 	//check if username exists

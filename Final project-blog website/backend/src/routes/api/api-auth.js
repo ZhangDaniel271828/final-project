@@ -62,11 +62,11 @@ router.delete("/delete", requiresAuthentication, async (req, res) => {
 
 //register
 router.post("/register", async (req, res) => {
-  const userData = req.body;
-  const { username, password, realName, birthDate, blurb } = userData;
+  const { username, password, realName, birthDate, blurb, imageLink } = req.body;
+  const Newuser = { username, password, realName, birthDate, blurb, imageLink };
 
   //Validate required fields
-  if (!username || !password || !realName || !birthDate || !blurb) {
+  if (!username || !password || !realName || !birthDate || !blurb || !imageLink) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
@@ -81,13 +81,13 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // create user
-    const newUser = {
-      ...userData,
+    const userData = {
+      ...Newuser,
       password: hashedPassword
     };
 
     // post in database
-    await createUser(newUser);
+    await createUser(userData);
     return res.sendStatus(201);
   } catch (error) {
     console.error("Registration error:", error);

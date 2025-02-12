@@ -41,7 +41,7 @@
   <ul>
     <!-- Display the login link OR the logout button, not both. -->
     {#if data.isLoggedIn}
-      <li><button on:click={handleLogout}>Logout</button></li>
+    <li><button on:click={handleLogout}>Logout</button></li>
     {:else}
       <li><a href="/login" class:active={path.startsWith("/login")}>Login</a></li>
     {/if}

@@ -10,6 +10,7 @@
   let realName = user.realName;
   let birthDate = user.birthDate;
   let blurb = user.blurb;
+  let imageLink = user.imageLink;
 
   //handle update User's info
   let error = false;
@@ -35,57 +36,51 @@
   async function deleteAccount() {
     const response = await fetch(USER_DELETE, {
       method: "DELETE",
-      credentials: "include" 
+      credentials: "include"
     });
 
-    if(response.status == 204){
-      alert("Your account has been deleted")
+    if (response.status == 204) {
+      alert("Your account has been deleted");
       await invalidateAll();
-    }else{
+    } else {
       alert("error");
     }
   }
 
-
-
+  console.log(imageLink);
 </script>
 
-
-
 <form on:submit|preventDefault={handleSave}>
-
-  <div class = "baiscInfo1"> 
+  <div class="baiscInfo1">
     <label for="username">Username:</label>
     <input type="text" name="username" bind:value={username} required />
     <label for="lastName">Real Name:</label>
     <input type="text" name="lastName" bind:value={realName} required />
     <label for="dob">Date of Birth:</label>
     <input type="text" name="dob" bind:value={birthDate} required />
+    <p>My Avatar</p>
+    <img src={imageLink} height="200px" alt="Image12" />
   </div>
 
-  <div class = "basicInfo2">
+  <div class="basicInfo2">
     <!-- displaying blurb -->
     <textarea bind:value={blurb} rows="12" required />
 
-
     <button type="submit">Save</button>
-      <!-- display saving result -->
-    {#if error} <span class="error">Could not save!</span>{/if}
+    <!-- display saving result -->
+    {#if error}
+      <span class="error">Could not save!</span>{/if}
     {#if success}<span class="success">Saved!</span>{/if}
   </div>
 
-  <br>
-  <br>
-  <br>
-  <br>
-
+  <br />
+  <br />
+  <br />
+  <br />
 </form>
 
 <!-- delte button -->
-<div class = "deleteButton"><button on:click = {deleteAccount} >Delete Account</button></div>
-
-
-
+<div class="deleteButton"><button on:click={deleteAccount}>Delete Account</button></div>
 
 <style>
   .baiscInfo1 {
@@ -107,7 +102,7 @@
     gap: 5px;
   }
 
-  .deleteButton{
+  .deleteButton {
     margin: auto;
     max-width: 800px;
     border: 1px dashed green;
@@ -117,15 +112,6 @@
     grid-template-columns: 1fr;
     gap: 5px;
   }
-
-
-
-
-
-
- 
-
-
 
   .error,
   .success {

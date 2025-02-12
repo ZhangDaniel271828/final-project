@@ -1,78 +1,3 @@
-
-<!-- <script>
-  export let user;
-  let article_title = "";
-  let content = "";  
-  let username = user.username;
-  let authorId = user.id;
-  
-  import { ARTICLES_URL } from "$lib/js/api-urls.js";
-  import Editor from "@tinymce/tinymce-svelte";
-
-  let conf = {
-    height: 500,
-    menubar: false,
-    plugins: [
-      "a11ychecker", "advlist", "advcode", "advtable", "autolink", "checklist", "export",
-      "lists", "link", "image", "charmap", "preview", "anchor", "searchreplace", "visualblocks",
-      "powerpaste", "fullscreen", "formatpainter", "insertdatetime", "media", "table", "help", "wordcount"
-    ],
-    toolbar: "undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | " +
-      "bullist numlist checklist outdent indent | removeformat | code table image media help",
-    
-    // ✅ 允许粘贴 & 拖拽图片
-    image_advtab: true,
-    paste_data_images: true,
-
-    // ✅ 配置图片上传方式
-    images_upload_handler: async (blobInfo, success, failure) => {
-      let formData = new FormData();
-      formData.append("image", blobInfo.blob());
-
-      try {
-        const response = await fetch(`${ARTICLES_URL}/upload-image`, {
-          method: "POST",
-          body: formData
-        });
-
-        if (!response.ok) throw new Error("Image upload failed");
-
-        const data = await response.json();
-        success(data.imageUrl); // 🔥 TinyMCE 需要返回图片的 URL
-      } catch (error) {
-        console.error("Upload error:", error);
-        failure("Upload failed");
-      }
-    }
-  };
-
-  async function handlePost() {
-    let error = false;
-    let success = false;
-
-    console.log("Submitting article:", { authorId, username, article_title, content });
-
-    const response = await fetch(ARTICLES_URL, {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ authorId, username, article_title, content })
-    });
-
-    success = response.status === 201;
-    error = !success;
-
-    if (success) {
-      alert("Article posted successfully!");
-      location.reload();
-    } else {
-      const errorMessage = await response.text(); 
-      console.error("Error response:", errorMessage);
-      alert("Failed to post article.");
-    }
-  }
-</script> -->
-
 <script>
   export let user;
   let article_title = "";
@@ -87,49 +12,50 @@
     height: 500,
     menubar: false,
     plugins: [
-      "a11ychecker", "advlist", "advcode", "advtable", "autolink", "checklist", "export",
-      "lists", "link", "image", "charmap", "preview", "anchor", "searchreplace", "visualblocks",
-      "powerpaste", "fullscreen", "formatpainter", "insertdatetime", "media", "table", "help", "wordcount"
+      "advlist",
+      "autolink",
+      "lists",
+      "link",
+      "image",
+      "charmap",
+      "anchor",
+      "searchreplace",
+      "visualblocks",
+      "code",
+      "fullscreen",
+      "insertdatetime",
+      "media",
+      "table",
+      "preview",
+      "help",
+      "wordcount"
     ],
-    toolbar: "undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | " +
-      "bullist numlist checklist outdent indent | removeformat | code table image media help",
-    
+    toolbar:
+      "undo redo | blocks | " +
+      "bold italic forecolor | alignleft aligncenter " +
+      "alignright alignjustify | bullist numlist outdent indent | " +
+      "removeformat | image media help",
     image_advtab: true,
-    paste_data_images: true,
+    paste_data_images: true, // 允许粘贴 Base64 图片
+    images_upload_handler: function (blobInfo) {
+      return new Promise((resolve, reject) => {
+        // 使用 FileReader 将图片转换为 base64 格式
+        const reader = new FileReader();
+        reader.onloadend = function () {
+          // 获取 base64 字符串
+          const base64String = reader.result.split(",")[1]; // 去掉前缀部分
+          // 返回 base64 字符串
 
-    images_upload_handler: async (blobInfo, success, failure) => {
-      let formData = new FormData();
-      formData.append("image", blobInfo.blob());
+          resolve("data:image/jpeg;base64," + base64String); // 根据你的图片格式调整 mime 类型（image/jpeg）
+        };
 
-      try {
-        const response = await fetch(`${ARTICLES_URL}/upload-image`, {
-        method: "POST",
-        body: formData
-        });
+        reader.onerror = function () {
+          reject(new Error("Image upload failed: Unable to read file."));
+        }; // 读取图片为 base64 格式
 
-      if (!response.ok) throw new Error("Image upload failed");
-
-      // 获取返回的相对路径（假设是 /uploads/1739264194586.jpg）
-      const data = await response.json();
-      const imageUrl = `http://localhost:3000${data.imageUrl}`; // 拼接成绝对路径
-
-      console.log("✅ 图片上传成功，返回的 URL:", imageUrl);
-
-      // 直接插入完整的绝对路径
-      tinymce.activeEditor.insertContent(`<img src="${imageUrl}">`);
-
-      //success(imageUrl); 
-      } catch (error) {
-        console.error("❌ 上传失败:", error);
-        failure("Upload failed");
-      }
-}
-
-
-
-
-
-
+        reader.readAsDataURL(blobInfo.blob());
+      });
+    }
   };
 
   async function handlePost() {
@@ -144,7 +70,6 @@
 
     if (response.status === 201) {
       alert("Article posted successfully!");
-      
       location.reload();
     } else {
       const errorMessage = await response.text();
@@ -154,7 +79,6 @@
   }
 </script>
 
-
 <form class="post-container" on:submit|preventDefault={handlePost}>
   <h1>Post an Article</h1>
 
@@ -162,11 +86,7 @@
   <input type="text" id="title" bind:value={article_title} required />
 
   <label for="content">Content:</label>
-  <Editor 
-    apiKey="dw3gchjnq8vlhofa34s8mo2hrxlrsv80qnarmafb1r9j2z7z"
-    {conf}
-    bind:value={content}
-  />
+  <Editor apiKey="dw3gchjnq8vlhofa34s8mo2hrxlrsv80qnarmafb1r9j2z7z" {conf} bind:value={content} />
 
   <div class="button-group">
     <button type="submit" class="primary">Post</button>

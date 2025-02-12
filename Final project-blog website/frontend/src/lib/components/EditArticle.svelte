@@ -14,35 +14,55 @@
     height: 500,
     menubar: false,
     plugins: [
-      "advlist", "autolink", "lists", "link", "image", "charmap",
-      "anchor", "searchreplace", "visualblocks", "code", "fullscreen",
-      "insertdatetime", "media", "table", "preview", "help", "wordcount"
+      "advlist",
+      "autolink",
+      "lists",
+      "link",
+      "image",
+      "charmap",
+      "anchor",
+      "searchreplace",
+      "visualblocks",
+      "code",
+      "fullscreen",
+      "insertdatetime",
+      "media",
+      "table",
+      "preview",
+      "help",
+      "wordcount"
     ],
-    toolbar: "undo redo | blocks | " +
+    toolbar:
+      "undo redo | blocks | " +
       "bold italic forecolor | alignleft aligncenter " +
       "alignright alignjustify | bullist numlist outdent indent | " +
       "removeformat | image media help",
-    
+
     image_advtab: true,
     paste_data_images: true, // 允许粘贴 Base64 图片
-    images_upload_handler: (blobInfo, success, failure) => {
-      // 处理 Base64 图片上传
-      let formData = new FormData();
-      formData.append("image", blobInfo.blob());
+    images_upload_handler: function (blobInfo) {
+      return new Promise((resolve, reject) => {
+        // 使用 FileReader 将图片转换为 base64 格式
+        const reader = new FileReader();
 
-      fetch(`${ARTICLES_URL}/upload-image`, {
-        method: "POST",
-        body: formData
-      })
-        .then(response => response.json())
-        .then(data => {
-          let imageUrl = `http://localhost:3000${data.imageUrl}`;
-          success(imageUrl); // 返回 URL 替换 Base64
-        })
-        .catch(() => failure("Image upload failed"));
+        reader.onloadend = function () {
+          // 获取 base64 字符串
+          const base64String = reader.result.split(",")[1]; // 去掉前缀部分
+
+          // 返回 base64 字符串
+          resolve("data:image/jpeg;base64," + base64String); // 根据你的图片格式调整 mime 类型（image/jpeg）
+        };
+
+        reader.onerror = function () {
+          reject(new Error("Image upload failed: Unable to read file."));
+        };
+
+        // 读取图片为 base64 格式
+        reader.readAsDataURL(blobInfo.blob());
+      });
     }
   };
-  
+
   async function fetchArticle(id) {
     if (!id) return;
 
@@ -81,7 +101,7 @@
 
       if (src.startsWith("data:image")) {
         let formData = new FormData();
-        formData.append("image", await fetch(src).then(res => res.blob()));
+        formData.append("image", await fetch(src).then((res) => res.blob()));
 
         try {
           let response = await fetch(`${ARTICLES_URL}/upload-image`, {
@@ -101,58 +121,62 @@
         }
       }
     }
-  
-      // 获取新的文章内容（Base64 图片已替换为 URL）
-      content = doc.body.innerHTML;
-  
-      // 发送更新请求
-      const response = await fetch(`${ARTICLES_URL}/update/${articleId}`, {
-        method: "PATCH",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ article_title, content })
-      });
-  
-      success = response.status === 204;
-      error = !success;
-  
-      if (success) {
-        alert("success!");
-        invalidate(ARTICLES_URL);
-  
-        // 1 秒后自动刷新页面
-        setTimeout(() => {
-          location.reload();
-        }, 1000);
-      } else {
-        alert(" failed");
-      }
+
+    // 获取新的文章内容（Base64 图片已替换为 URL）
+    content = doc.body.innerHTML;
+
+    // 发送更新请求
+    const response = await fetch(`${ARTICLES_URL}/update/${articleId}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ article_title, content })
+    });
+
+    success = response.status === 204;
+    error = !success;
+
+    if (success) {
+      alert("success!");
+      invalidate(ARTICLES_URL);
+
+      // 1 秒后自动刷新页面
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    } else {
+      alert(" failed");
     }
-  </script>
-  
+  }
+</script>
+
 <form on:submit|preventDefault={handleEditArticle}>
   <div class="edit-container">
     <label for="title">Title:</label>
     <input type="text" id="title" bind:value={article_title} required />
 
     <label for="content">Content:</label>
-    
+
     <!--  使用 TinyMCE 绑定 content -->
     <Editor
       apiKey="dw3gchjnq8vlhofa34s8mo2hrxlrsv80qnarmafb1r9j2z7z"
       channel="7"
-      bind:value={content}  
+      bind:value={content}
       {conf}
     />
 
     <button type="submit">Save</button>
-    <button type="button" on:click={() => location.reload()}>Cancel</button> 
+    <button type="button" on:click={() => location.reload()}>Cancel</button>
 
-    {#if error} <span class="error">Failed to update!</span> {/if}
-    {#if success} <span class="success">Updated successfully! Refreshing...</span> {/if}
+    {#if error}
+      <span class="error">Failed to update!</span>
+    {/if}
+    {#if success}
+      <span class="success">Updated successfully! Refreshing...</span>
+    {/if}
   </div>
 </form>
-  
+
 <style>
   .edit-container {
     max-width: 800px;
@@ -175,4 +199,3 @@
     font-weight: bold;
   }
 </style>
-  
