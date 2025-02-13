@@ -146,6 +146,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    width: 100%;
   }
 
   .nav button::before {
@@ -202,6 +203,7 @@
     padding: 1rem;
     border-radius: 1rem;
     transition: all 0.3s ease;
+    width: 100%;
   }
 
   input[type="text"]:focus {
