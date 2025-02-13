@@ -77,6 +77,10 @@
     {#if error}
       <span class="error">Could not save!</span>{/if}
     {#if success}<span class="success">Saved!</span>{/if}
+    <br>
+    <br>
+    <div class="deleteButton"><button on:click={deleteAccount}>Delete Account</button></div>
+
   </div>
 
   <br />
@@ -86,7 +90,6 @@
 </form>
 
 <!-- delte button -->
-<div class="deleteButton"><button on:click={deleteAccount}>Delete Account</button></div>
 
 <style>
   form {

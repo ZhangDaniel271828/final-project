@@ -149,10 +149,10 @@
   <span>{likeCount} likes</span>
   {#if isLiked}
     <button on:click={() => deleteLike(user_Id, id)}>Unlike</button>
-    <p>You have liked this article</p>
-  {:else}
-    <button on:click={() => addLike(user_Id, id)}>Give this article a like</button>
-    <p>You have not liked yet, you can like this article</p>
+    <p>🐶You have liked this article🐱</p>
+    {:else}
+      <button on:click={() => addLike(user_Id, id)}>Give this article a like</button>
+      <p>🐾You have not liked yet, you can like this article🐾</p>
   {/if}
 
   <button on:click={() => (edit = true)}>edit</button>
@@ -179,3 +179,13 @@
 {:else}
   <p>Editing...</p>
 {/if}
+
+
+<style>
+  h1 {
+    text-align: center;
+    background-color: #7b7b7b;
+    color: #f7eaec;
+    border-radius: 15px;
+  }
+</style>

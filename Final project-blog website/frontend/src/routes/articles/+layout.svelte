@@ -80,7 +80,9 @@
     <input type="text" name="search" bind:value={search} />
 
     {#each articles as article}
-      <a href={`/articles/${article.id}`}>{article.article_title}</a>
+      <a href={`/articles/${article.id}`}><span style="display: inline-block; width: 90%; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        {article.article_title}
+      </span></a>
     {/each}
   </nav>
 
@@ -90,44 +92,42 @@
 </div>
 
 <!-- Css part -->
+
 <style>
   .layout {
     display: flex;
     margin-top: 60px;
-    background: #f8f9fa;
     min-height: 100vh;
   }
 
   .nav {
-    background: #2d3748;
-    padding: 2rem;
-    width: 300px;
-    min-height: 100vh;
-    position: sticky;
-    left: 0;
-    top: 0;
-    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    z-index: 90;
-  }
-
-  .nav {
-    background: #2d3748;
+    background: #7b7b7b;
     padding: 2rem;
     width: 20%;
-    min-height: 100vh;
+    height: 100vh; /* 设置高度为视口高度 */
     position: fixed;
     left: 0;
     top: 10%;
     box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
     color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 90;
+    overflow-y: auto;
+    align-items: center;;
+    justify-content: flex-start;
+  }
+
+  .content {
+    margin-left: 300px;
+    padding: 3rem;
+    background: #f7eaec;
+    min-height: 100vh;
+    width: calc(100% - 300px);
   }
 
   .nav button {
-    background: linear-gradient(135deg, #ffd6e7 0%, #2d3748 100%);
+    background: linear-gradient(135deg, #f7eaec 0%, #2d3748 100%);
     border: none;
     padding: 1rem;
     color: #2d3748;
@@ -155,45 +155,36 @@
     transform: rotate(90deg);
   }
 
-  .content {
-    margin-left: 300px;
-    padding: 3rem;
-    background: white;
-    min-height: 100vh;
-    width: calc(100% - 300px);
-  }
-
   a {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 1rem;
-    background: rgba(255, 214, 231, 0.1); /* using #ffd6e7 with transparency */
+    background: rgba(255, 214, 231, 0.1); /* Background color with transparency */
     border-radius: 1rem;
     margin: 0.5rem 0;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    color: white;
+    color: white; /* Default text color */
     text-decoration: none;
-  }
-
-  a::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 3px;
-    height: 100%;
-    background: #ffd6e7;
-    transition: width 0.3s ease;
+    white-space: nowrap; /* Ensure text stays on one line */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+    width: 100%;
   }
 
   a:hover {
-    background: rgba(255, 214, 231, 0.2);
+    background: rgba(255, 214, 231, 0.2); /* Slightly darker background on hover */
     transform: translateX(10px);
   }
 
   a:hover::before {
     width: 100%;
+  }
+
+  a:hover {
+    color: #2d3748; /* Dark text color on hover */
   }
 
   input[type="text"] {
@@ -208,5 +199,15 @@
   input[type="text"]:focus {
     background: rgba(255, 214, 231, 0.2);
     border-color: #ffd6e7;
+  }
+
+  @media (max-width: 768px) {
+    .nav {
+      width: 100%;
+      position: static;
+    }
+    .content {
+      margin-left: 0;
+    }
   }
 </style>

@@ -22,7 +22,10 @@
   }
 </script>
 
-<!-- nav bar for website -->
+{#if path === "/"}
+  <img src="/top.png" alt="top picture" class="top-image" width="100%" />
+{/if}
+
 <nav>
   <ul>
     <li><a href="/" class:active={path === "/"}>Home</a></li>
@@ -41,7 +44,6 @@
       <li><button on:click={handleLogout}>Logout</button></li>
     {:else}
       <li><a href="/login" class:active={path.startsWith("/login")}>Login</a></li>
-      <li><a href="/login/register" class:active={path === "/login/register"}>Register</a></li>
     {/if}
   </ul>
 </nav>
@@ -49,3 +51,14 @@
 <div class="container">
   <slot />
 </div>
+
+<style>
+  nav {
+    z-index: 9999;
+    background-size: cover;
+    background-position: center;
+  }
+  a {
+    color: white;
+  }
+</style>

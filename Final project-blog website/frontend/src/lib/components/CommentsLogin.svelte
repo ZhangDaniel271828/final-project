@@ -187,23 +187,23 @@
 <!-- CSS part -->
 <style>
   :root {
-    --primary-color: #ffb6c1; /* Light pink */
-    --secondary-color: #2b2d42; /* Dark gray */
-    --text-color: #edf2f4; /* Near white */
+    --cdaprimary-color: #f7eaec; /* Light pink */
+    --cdasecondary-color: #7b7b7b; /* Dark gray */
+    --cdatext-color: #01041b; /* Near white */
   }
 
   /* Comment section overall container */
   .comments {
-    background-color: var(--secondary-color);
+    background-color: var(--clnsecondary-color);
     padding-top: 5px;
     padding-bottom: 20px;
-    color: var(--text-color);
+    color: var(--clntext-color);
   }
 
   /* Title */
   h2 {
     margin-left: 50px;
-    color: var(--primary-color);
+    color: var(--clnprimary-color);
   }
 
   /* Reply form margin */
@@ -214,35 +214,35 @@
   /* Main comment style */
   .mainComments {
     max-width: 600px;
-    border: 1px dashed var(--primary-color);
+    border: 1px dashed var(--clnprimary-color);
     background-color: #3a3c58; /* Slightly lighter than dark gray, maintaining hierarchy */
     padding: 10px;
     margin-top: 20px;
     margin-left: 40px;
-    color: var(--text-color);
+    color: var(--clntext-color);
   }
 
   /* Timestamp style */
   .timeStamp {
     font-size: small;
-    color: var(--text-color);
+    color: var(--clntext-color);
   }
 
   /* First level reply (child comment) */
   .childComment1 {
-    border: 1px dashed var(--primary-color);
+    border: 1px dashed var(--clnprimary-color);
     background-color: #424a66; /* Slightly lighter than main comment */
     padding-left: 30px;
     margin: 10px;
-    color: var(--text-color);
+    color: var(--clntext-color);
   }
 
   /* Second level reply (grandchild comment) */
   .childComment2 {
-    border: 1px dashed var(--primary-color);
+    border: 1px dashed var(--clnprimary-color);
     background-color: #4a526e; /* Increase brightness again, ensuring clear hierarchy */
     padding-left: 50px;
     margin: 10px;
-    color: var(--text-color);
+    color: var(--clntext-color);
   }
 </style>

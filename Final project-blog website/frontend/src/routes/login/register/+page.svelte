@@ -1,7 +1,6 @@
 <script>
   import { goto } from "$app/navigation";
   import { USER_REGISTER, CHECK_USERNAME, AVATARUPLOAD_URL } from "$lib/js/api-urls.js";
-  import {} from "$lib/js/api-urls.js";
 
   //fomr variables
   let username = "";
@@ -142,8 +141,12 @@
               id="username"
               bind:value={username}
               required
+              on:change={checkUsername}
               placeholder="Your unique ID"
             />
+            {#if usernameExists}
+              <div class="error-message">⚠️ Username already exists!</div>
+            {/if}
           </div>
 
           <div class="form-group">
@@ -293,6 +296,10 @@
     padding: 1.5rem;
     border-radius: 1rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .error {
+    color: #e3246a;
   }
 
   .form-grid {

@@ -110,51 +110,63 @@
   }
 </script>
 
-{#if article}
-  <h1>{article.article_title}</h1>
-  <h3>Author: {article.username}</h3>
-  {@html article.content}
+<div class="gradient-background">
+  {#if article}
+    <h1>{article.article_title}</h1>
+    <h3>Author: {article.username}</h3>
+    {@html article.content}
 
-  <p>{article.createdAt}</p>
+    <p>{article.createdAt}</p>
 
-  <!-- like part -->
-  <span>{likeCount} likes</span>
-  {#if isLoggedIn}
-    {#if isLiked}
-      <button on:click={() => deleteLike(user_Id, id)}>Unlike</button>
-      <p>You have liked this article</p>
+    <!-- like part -->
+    <span>{likeCount} likes</span>
+    {#if isLoggedIn}
+      {#if isLiked}
+        <button on:click={() => deleteLike(user_Id, id)}>Unlike</button>
+        <p>🐶You have liked this article🐱</p>
+      {:else}
+        <button on:click={() => addLike(user_Id, id)}>Give this article a like</button>
+        <p>🐾You have not liked yet, you can like this article🐾</p>
+      {/if}
+    {/if}
+  {:else}
+    <p>Loading...</p>
+  {/if}
+
+  <!-- if login and this is my article, I can delete all comments -->
+  {#if isLoggedIn && name == author}
+    {#if article && id && user}
+      <CommentsDeleteAll {user} articleId={id} />
     {:else}
-      <button on:click={() => addLike(user_Id, id)}>Give this article a like</button>
-      <p>You have not liked yet, you can like this article</p>
+      <p>Loading...</p>
     {/if}
   {/if}
-{:else}
-  <p>Loading...</p>
-{/if}
 
-<!-- if login and this is my article, I can delete all comments -->
-{#if isLoggedIn && name == author}
-  {#if article && id && user}
-    <CommentsDeleteAll {user} articleId={id} />
-  {:else}
-    <p>Loading...</p>
+  <!-- if login and this is not my article, I can delete my comments -->
+  {#if isLoggedIn && name != author}
+    {#if article && id && user}
+      <CommentsLogin {user} articleId={id} />
+    {:else}
+      <p>Loading...</p>
+    {/if}
   {/if}
-{/if}
 
-<!-- if login and this is not my article, I can delete my comments -->
-{#if isLoggedIn && name != author}
-  {#if article && id && user}
-    <CommentsLogin {user} articleId={id} />
-  {:else}
-    <p>Loading...</p>
+  <!-- if no login, I can't reply and delete comments -->
+  {#if !isLoggedIn}
+    {#if id}
+      <CommentsLogout articleId={id} />
+    {:else}
+      <p>Loading...</p>
+    {/if}
   {/if}
-{/if}
+</div>
 
-<!-- if no login, I can't reply and delete comments -->
-{#if !isLoggedIn}
-  {#if id}
-    <CommentsLogout articleId={id} />
-  {:else}
-    <p>Loading...</p>
-  {/if}
-{/if}
+<style>
+  h1 {
+    text-align: center;
+    background-color: #7b7b7b;
+    color: #f7eaec;
+    border-radius: 15px;
+  }
+</style>
+
