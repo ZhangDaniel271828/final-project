@@ -1,8 +1,9 @@
-
 Blog System
-Overview
+
+<!-- Overview -->
 This project is a fully functional blog system that includes user management, article publishing, a commenting system, and an admin management panel built with Java Swing. The system is designed to be user-friendly, secure, and efficient.
-Features
+
+<!-- Features -->
 1. User Management
 User registration with unique username validation
 Secure password storage using hash + salt
@@ -36,16 +37,21 @@ User management with a table displaying user data
 Admin can delete users (which cascades to delete their articles and comments)
 UI follows the MVC (Model-View-Controller) design pattern
 Asynchronous UI updates to prevent freezing
-Tech Stack
+
+<!-- Tech Stack -->
 Frontend: HTML, CSS, JavaScript, Svelte
 Backend: Node.js, Express
 Database: SQL
 Admin Panel: Java Swing
 Authentication: JWT
 Version Control: Git
-Installation
+
+<!-- Installation -->
 Prerequisites
+
 Node.js and npm installed
 Java Development Kit (JDK) installed
 MySQL or other SQL database installed
 Git installed
+
+
